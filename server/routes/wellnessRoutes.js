@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { list, create, update, progress } from "../controllers/wellnessController.js";
+import { protect } from "../middleware/auth.js";
+const router = Router();
+router.use(protect);
+router.get("/", list);
+router.post("/", create);
+router.put("/:id", update);
+router.post("/:id/progress", progress);
+export default router;
