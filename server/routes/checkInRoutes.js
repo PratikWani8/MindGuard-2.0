@@ -6,6 +6,7 @@ import {
   getCheckIn,
   today,
   trends,
+  streak,
 } from "../controllers/checkInController.js";
 
 import { protect } from "../middleware/auth.js";
@@ -35,9 +36,29 @@ router.post(
   createCheckIn
 );
 
-router.get("/", listCheckIns);
-router.get("/today", today);
-router.get("/trends", trends);
-router.get("/:id", getCheckIn);
+router.get(
+  "/",
+  listCheckIns
+);
+
+router.get(
+  "/today",
+  today
+);
+
+router.get(
+  "/trends",
+  trends
+);
+
+router.get(
+  "/streak",
+  streak
+);
+
+router.get(
+  "/:id",
+  getCheckIn
+);
 
 export default router;
