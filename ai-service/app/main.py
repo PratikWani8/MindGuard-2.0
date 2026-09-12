@@ -7,11 +7,14 @@ from app.schemas import (
     JournalAnalysisRequest,
     JournalAnalysisResponse,
     AgentReasoningRequest,
-    AgentReasoningResponse
+    AgentReasoningResponse,
+    ChatRequest,
+    ChatResponse
 )
 
 from app.services.journal_ai import analyze_journal
 from app.services.agent_ai import reason_about_wellbeing
+from app.services.chat_ai import chat_with_ai
 
 load_dotenv()
 
@@ -83,4 +86,29 @@ async def agent_reasoning(
         raise HTTPException(
             status_code=500,
             detail="Agent reasoning failed"
+        )
+
+@app.post(
+    "/api/v1/chat",
+    response_model=ChatResponse
+)
+async def chat(
+    payload: ChatRequest
+):
+    try:
+        result = await chat_with_ai(
+            user_id=payload.userId,
+            message=payload.message,
+            history=payload.history,
+            conversation_id=payload.conversationId
+        )
+
+        return result
+
+    except Exception as error:
+        print("CHAT AI ERROR:", error)
+
+        raise HTTPException(
+            status_code=500,
+            detail="Chat AI response failed"
         )
