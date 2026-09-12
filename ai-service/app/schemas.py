@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 
 class JournalAnalysisRequest(BaseModel):
@@ -60,3 +60,19 @@ class AgentReasoningResponse(BaseModel):
     riskLevel: str
     followUpRequired: bool
     followUpQuestion: str = ""
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    userId: str
+    conversationId: Optional[str] = None
+    message: str = Field(..., min_length=1, max_length=20000)
+    history: List[ChatMessage] = []
+
+
+class ChatResponse(BaseModel):
+    message: str
+    sources: List[str] = []
