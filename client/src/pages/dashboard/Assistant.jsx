@@ -534,9 +534,9 @@ const send = async (text = input) => {
                 className={cn(
                   "max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
 
-                  m.role === "user"
-                    ? "bg-gradient-to-br from-violet-500 to-aqua-500 text-white"
-                    : "bg-white/80 text-ink-700 border border-violet-100"
+                 m.role === "user"
+                ? "bg-gradient-to-br from-violet-500 to-aqua-500 text-white"
+                : "assistant-response bg-white/80 text-ink-700 border border-violet-100 dark:bg-gray-800 dark:border-gray-700"
                 )}
               >
 
