@@ -605,7 +605,18 @@ function selectTrack(track) {
         {/* AUDIO PLAYER */}
         {/* ------------------------------------------------ */}
 
-        <div className="border-t border-violet-100 bg-white/60 px-6 md:px-8 py-5">
+        <div
+          className="
+            border-t
+            border-violet-100
+            bg-white/60
+            px-6
+            md:px-8
+            py-5
+            dark:border-gray-700
+            dark:bg-gray-900/80
+          "
+        >
           <audio
             ref={audioRef}
             src={currentTrack?.src || ""}
@@ -642,7 +653,17 @@ function selectTrack(track) {
             </button>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between text-xs text-ink-400 mb-2">
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  text-xs
+                  text-ink-400
+                  dark:text-gray-400
+                  mb-2
+                "
+              >
                 <span>{formatTime(currentTime)}</span>
 
                 <span>
@@ -668,7 +689,19 @@ function selectTrack(track) {
             <button
               type="button"
               onClick={toggleMute}
-              className="h-10 w-10 shrink-0 rounded-xl hover:bg-violet-50 text-ink-500 flex items-center justify-center"
+              className="
+  h-10
+  w-10
+  shrink-0
+  rounded-xl
+  hover:bg-violet-50
+  dark:hover:bg-gray-800
+  text-ink-500
+  dark:text-gray-300
+  flex
+  items-center
+  justify-center
+"
               aria-label={
                 volume === 0
                   ? "Unmute"
@@ -703,7 +736,18 @@ function selectTrack(track) {
       {/* ------------------------------------------------ */}
 
       {recommendation?.aiMessage && (
-        <div className="rounded-2xl border border-violet-100 bg-gradient-to-r from-violet-50 to-aqua-50 p-5">
+        <div
+  className="
+    music-ai-suggestion
+    rounded-2xl
+    border
+    border-violet-100
+    bg-gradient-to-r
+    from-violet-50
+    to-aqua-50
+    p-5
+  "
+>
           <div className="flex gap-3">
             <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-violet-600 shrink-0">
               <Sparkles size={19} />
@@ -746,39 +790,90 @@ function selectTrack(track) {
 
             return (
               <button
-                key={track.id}
-                type="button"
-                onClick={() => selectTrack(track)}
-                className={`text-left rounded-2xl border p-5 transition-all ${
-                  selected
-                    ? "border-violet-300 bg-violet-50 shadow-soft"
-                    : "border-violet-100 bg-white hover:border-violet-200 hover:bg-violet-50/50"
-                }`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-violet-100 to-aqua-100 flex items-center justify-center text-violet-600">
-                    <Music2 size={20} />
-                  </div>
+  key={track.id}
+  type="button"
+  onClick={() => selectTrack(track)}
+  className={`text-left rounded-2xl border p-5 transition-all ${
+    selected
+      ? `
+        border-violet-300
+        bg-violet-50
+        shadow-soft
+        dark:border-violet-500/50
+        dark:bg-violet-950/40
+      `
+      : `
+        border-violet-100
+        bg-white
+        hover:border-violet-200
+        hover:bg-violet-50/50
+        dark:border-gray-700
+        dark:bg-gray-800
+        dark:hover:border-violet-500/50
+        dark:hover:bg-gray-750
+      `
+  }`}
+>
+  <div className="flex items-start justify-between gap-3">
 
-                  {selected && (
-                    <span className="text-violet-600">
-                      <Music2 size={17} />
-                    </span>
-                  )}
-                </div>
+    <div
+      className="
+        music-track-icon
+        h-11
+        w-11
+        rounded-xl
+        bg-gradient-to-br
+        from-violet-100
+        to-aqua-100
+        flex
+        items-center
+        justify-center
+        text-violet-600
+      "
+    >
+      <Music2 size={20} />
+    </div>
 
-                <h3 className="font-semibold text-ink-900 mt-4">
-                  {track.title}
-                </h3>
+    {selected && (
+      <span className="text-violet-600 dark:text-violet-400">
+        <Music2 size={17} />
+      </span>
+    )}
+  </div>
 
-                <p className="text-sm text-ink-500 mt-1">
-                  {track.category}
-                </p>
+  <h3
+    className="
+      font-semibold
+      text-ink-900
+      mt-4
+      dark:text-gray-100
+    "
+  >
+    {track.title}
+  </h3>
 
-                <p className="text-xs text-ink-400 mt-3">
-                  {track.duration}
-                </p>
-              </button>
+  <p
+    className="
+      text-sm
+      text-ink-500
+      mt-1
+      dark:text-gray-400
+    "
+  >
+    {track.category}
+  </p>
+
+  <p
+    className="
+      text-xs
+      text-ink-400
+      mt-3
+      dark:text-gray-500
+    "
+  >
+    {track.duration}
+  </p>
+</button>
             );
           })}
         </div>
