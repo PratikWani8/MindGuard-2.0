@@ -703,3 +703,51 @@ html.dark .music-track-card:hover {
   background-color: #252238 !important;
   border-color: #514a73 !important;
 }
+
+/* ============================================================
+   SUPPORT SECTION - DARK MODE
+   ============================================================ */
+
+/* Resource cards */
+html.dark .support-resource {
+  background-color: #272532 !important;
+  border-color: #3b3650 !important;
+  color: #f3f4f6 !important;
+}
+
+html.dark .support-resource:hover {
+  background-color: #302c3e !important;
+  border-color: #514a73 !important;
+}
+
+/* Resource title */
+html.dark .support-resource-title {
+  color: #f3f4f6 !important;
+}
+
+/* Resource subtitle/type */
+html.dark .support-resource-type {
+  color: #a5b4fc !important;
+}
+
+/* Arrow */
+html.dark .support-resource-arrow {
+  color: #c4b5fd !important;
+}
+
+/* Category cards */
+html.dark .support-category {
+  background-color: #1f1d2b !important;
+  border-color: #3b3657 !important;
+}
+
+/* Category headings */
+html.dark .support-category-title {
+  color: #f3f4f6 !important;
+}
+
+/* Category icons */
+html.dark .support-category-icon {
+  background-color: #302451 !important;
+  color: #c4b5fd !important;
+}
