@@ -1,7 +1,16 @@
 import { NavLink } from "react-router-dom";
 import {
-  LayoutDashboard, PenSquare, BookOpen, Sparkles, TrendingUp,
-  Leaf, MessagesSquare, LifeBuoy, User, Settings,
+  LayoutDashboard,
+  PenSquare,
+  BookOpen,
+  Sparkles,
+  TrendingUp,
+  Leaf,
+  MessagesSquare,
+  Music2,
+  LifeBuoy,
+  User,
+  Settings,
 } from "lucide-react";
 import { cn } from "../../utils/cn";
 
@@ -13,6 +22,7 @@ const items = [
   { to: "/dashboard/trends", label: "Trends", icon: TrendingUp },
   { to: "/dashboard/wellness-plan", label: "Wellness Plan", icon: Leaf },
   { to: "/dashboard/assistant", label: "AI Assistant", icon: MessagesSquare },
+  { to: "/dashboard/mind-relax", label: "Mind Relax", icon: Music2 },
   { to: "/dashboard/support", label: "Support", icon: LifeBuoy },
 ];
 
@@ -29,7 +39,9 @@ function NavItem({ to, label, icon: Icon, end }) {
       className={({ isActive }) =>
         cn(
           "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors focus-ring",
-          isActive ? "bg-gradient-to-br from-violet-500 to-aqua-500 text-white shadow-soft" : "text-ink-500 hover:bg-violet-50 hover:text-ink-800"
+          isActive
+            ? "bg-gradient-to-br from-violet-500 to-aqua-500 text-white shadow-soft"
+            : "text-ink-500 hover:bg-violet-50 hover:text-ink-800"
         )
       }
     >
@@ -45,19 +57,26 @@ export default function Sidebar({ onNavigate }) {
       <div className="flex items-center gap-2 font-display font-semibold text-ink-900 px-2 py-2 mb-4">
         <span className="h-9 w-9 rounded-xl bg-gradient-to-br from-violet-500 to-aqua-500 text-white flex items-center justify-center">
           <img
-          src="/logo.png"
-          alt="MindGuard"
-          className="h-9 w-9 object-contain"
-        />
+            src="/logo.png"
+            alt="MindGuard"
+            className="h-9 w-9 object-contain"
+          />
         </span>
         MindGuard
       </div>
+
       <nav className="flex-1 flex flex-col gap-1" onClick={onNavigate}>
-        {items.map((it) => <NavItem key={it.to} {...it} />)}
+        {items.map((it) => (
+          <NavItem key={it.to} {...it} />
+        ))}
       </nav>
+
       <div className="h-px bg-violet-100 my-3" />
+
       <nav className="flex flex-col gap-1" onClick={onNavigate}>
-        {bottomItems.map((it) => <NavItem key={it.to} {...it} />)}
+        {bottomItems.map((it) => (
+          <NavItem key={it.to} {...it} />
+        ))}
       </nav>
     </div>
   );
