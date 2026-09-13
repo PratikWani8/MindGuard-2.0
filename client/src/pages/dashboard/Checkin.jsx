@@ -26,31 +26,35 @@ const moods = [
     value: 1,
     label: "Very low",
     icon: Angry,
-    color: "text-red-500 bg-red-50",
+    color: "text-red-500 bg-red-50 dark:bg-red-500/10 dark:text-red-400",
   },
   {
     value: 2,
     label: "Low",
     icon: Frown,
-    color: "text-orange-500 bg-orange-50",
+    color:
+      "text-orange-500 bg-orange-50 dark:bg-orange-500/10 dark:text-orange-400",
   },
   {
     value: 3,
     label: "Neutral",
     icon: Meh,
-    color: "text-amber-500 bg-amber-50",
+    color:
+      "text-amber-500 bg-amber-50 dark:bg-amber-500/10 dark:text-amber-400",
   },
   {
     value: 4,
     label: "Good",
     icon: Smile,
-    color: "text-emerald-500 bg-emerald-50",
+    color:
+      "text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400",
   },
   {
     value: 5,
     label: "Very good",
     icon: Laugh,
-    color: "text-cyan-500 bg-cyan-50",
+    color:
+      "text-cyan-500 bg-cyan-50 dark:bg-cyan-500/10 dark:text-cyan-400",
   },
 ];
 
@@ -66,21 +70,38 @@ function SliderField({
   return (
     <div>
       <div className="flex items-center gap-2 mb-3">
-        <div className="h-9 w-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center">
+        <div
+          className="
+            h-9 w-9 rounded-xl
+            bg-violet-100 dark:bg-violet-500/15
+            text-violet-600 dark:text-violet-400
+            flex items-center justify-center
+          "
+        >
           <Icon size={17} />
         </div>
 
         <div>
-          <p className="text-sm font-medium text-ink-800">{label}</p>
+          <p className="text-sm font-medium text-ink-800 dark:text-gray-100">
+            {label}
+          </p>
 
           {hint && (
-            <p className="text-xs text-ink-400">
+            <p className="text-xs text-ink-400 dark:text-gray-500">
               {hint}
             </p>
           )}
         </div>
 
-        <span className="ml-auto font-display font-semibold text-violet-600">
+        <span
+          className="
+            ml-auto
+            font-display
+            font-semibold
+            text-violet-600
+            dark:text-gray-900
+          "
+        >
           {value}
         </span>
       </div>
@@ -91,7 +112,13 @@ function SliderField({
         max={max}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-violet-500 h-2 rounded-full"
+        className="
+          w-full
+          accent-violet-500
+          h-2
+          rounded-full
+          cursor-pointer
+        "
       />
     </div>
   );
@@ -181,12 +208,11 @@ export default function Checkin() {
   );
 
   return (
-    <div className="max-w-2xl mx-auto">
-
+    <div className="max-w-2xl mx-auto transition-colors duration-300">
       {/* Progress */}
       {steps[step] !== "done" && (
         <div className="mb-6">
-          <div className="flex justify-between text-xs text-ink-400 mb-1.5">
+          <div className="flex justify-between text-xs text-ink-400 dark:text-gray-500 mb-1.5">
             <span>
               Step {step + 1} of {steps.length - 1}
             </span>
@@ -194,7 +220,7 @@ export default function Checkin() {
             <span>{progress}%</span>
           </div>
 
-          <div className="h-1.5 rounded-full bg-violet-100 overflow-hidden">
+          <div className="h-1.5 rounded-full bg-violet-100 dark:bg-violet-500/15 overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-violet-500 to-aqua-500"
               animate={{
@@ -210,7 +236,17 @@ export default function Checkin() {
 
       {/* Error */}
       {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div
+          className="
+            mb-4
+            rounded-xl
+            border border-red-200 dark:border-red-500/20
+            bg-red-50 dark:bg-red-500/10
+            px-4 py-3
+            text-sm
+            text-red-600 dark:text-red-400
+          "
+        >
           {error}
         </div>
       )}
@@ -234,15 +270,14 @@ export default function Checkin() {
             duration: 0.25,
           }}
         >
-
           {/* ================= MOOD ================= */}
           {steps[step] === "mood" && (
             <GlassCard strong>
-              <h2 className="font-display text-xl font-semibold text-ink-900">
+              <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
                 How are you feeling right now?
               </h2>
 
-              <p className="text-sm text-ink-400 mt-1">
+              <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
                 Pick the option that feels closest.
               </p>
 
@@ -260,10 +295,28 @@ export default function Checkin() {
                         })
                       }
                       className={cn(
-                        "flex flex-col items-center gap-2 py-4 rounded-2xl border-2 transition-all focus-ring",
+                        `
+                          flex flex-col items-center gap-2
+                          py-4
+                          rounded-2xl
+                          border-2
+                          transition-all
+                          focus-ring
+                        `,
                         data.mood === m.value
-                          ? "border-violet-400 bg-violet-50"
-                          : "border-transparent bg-white/60 hover:bg-white"
+                          ? `
+                            border-violet-400
+                            dark:border-violet-500
+                            bg-violet-50
+                            dark:bg-violet-500/15
+                          `
+                          : `
+                            border-transparent
+                            bg-white/60
+                            dark:bg-white/[0.04]
+                            hover:bg-white
+                            dark:hover:bg-white/[0.08]
+                          `
                       )}
                     >
                       <span
@@ -275,7 +328,7 @@ export default function Checkin() {
                         <Icon size={20} />
                       </span>
 
-                      <span className="text-[11px] font-medium text-ink-600 text-center leading-tight">
+                      <span className="text-[11px] font-medium text-ink-600 dark:text-gray-300 text-center leading-tight">
                         {m.label}
                       </span>
                     </button>
@@ -289,11 +342,11 @@ export default function Checkin() {
           {steps[step] === "vitals" && (
             <GlassCard strong className="space-y-7">
               <div>
-                <h2 className="font-display text-xl font-semibold text-ink-900">
+                <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
                   A few more signals
                 </h2>
 
-                <p className="text-sm text-ink-400 mt-1">
+                <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
                   This helps MindGuard spot patterns over time.
                 </p>
               </div>
@@ -364,14 +417,14 @@ export default function Checkin() {
           {/* ================= JOURNAL ================= */}
           {steps[step] === "journal" && (
             <GlassCard strong>
-              <h2 className="font-display text-xl font-semibold text-ink-900">
+              <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
                 Anything on your mind?{" "}
-                <span className="text-ink-400 font-normal text-sm">
+                <span className="text-ink-400 dark:text-gray-500 font-normal text-sm">
                   (optional)
                 </span>
               </h2>
 
-              <p className="text-sm text-ink-400 mt-1">
+              <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
                 MindGuard can gently analyze this for patterns and themes.
               </p>
 
@@ -385,10 +438,31 @@ export default function Checkin() {
                 rows={7}
                 maxLength={10000}
                 placeholder="Write freely — there's no right way to do this…"
-                className="w-full mt-4 rounded-2xl border border-violet-100 bg-white/70 p-4 text-sm leading-relaxed focus-ring focus:border-violet-300 resize-none"
+                className="
+                  w-full
+                  mt-4
+                  rounded-2xl
+                  border
+                  border-violet-100
+                  dark:border-white/10
+                  bg-white/70
+                  dark:bg-white/[0.04]
+                  p-4
+                  text-sm
+                  leading-relaxed
+                  text-ink-800
+                  dark:text-gray-100
+                  placeholder:text-ink-400
+                  dark:placeholder:text-gray-600
+                  focus-ring
+                  focus:border-violet-300
+                  dark:focus:border-violet-500
+                  resize-none
+                  transition-colors
+                "
               />
 
-              <p className="text-xs text-ink-300 text-right mt-1">
+              <p className="text-xs text-ink-300 dark:text-gray-600 text-right mt-1">
                 {data.journalText.length} characters
               </p>
             </GlassCard>
@@ -397,15 +471,26 @@ export default function Checkin() {
           {/* ================= DONE ================= */}
           {steps[step] === "done" && (
             <GlassCard strong className="text-center py-14">
-              <div className="h-16 w-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4">
+              <div
+                className="
+                  h-16 w-16
+                  rounded-full
+                  bg-emerald-50
+                  dark:bg-emerald-500/10
+                  text-emerald-600
+                  dark:text-emerald-400
+                  flex items-center justify-center
+                  mx-auto mb-4
+                "
+              >
                 <CheckCircle2 size={30} />
               </div>
 
-              <h2 className="font-display text-2xl font-semibold text-ink-900">
+              <h2 className="font-display text-2xl font-semibold text-ink-900 dark:text-white">
                 Check-in complete
               </h2>
 
-              <p className="text-ink-400 mt-2 max-w-sm mx-auto">
+              <p className="text-ink-400 dark:text-gray-500 mt-2 max-w-sm mx-auto">
                 Thanks for showing up for yourself today. Your dashboard has
                 been updated.
               </p>
