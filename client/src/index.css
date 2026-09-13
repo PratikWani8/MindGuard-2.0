@@ -1,44 +1,705 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* { -webkit-font-smoothing: antialiased; }
+/* =========================================================
+   ROOT
+   ========================================================= */
 
-html, body, #root { height: 100%; }
-
-body {
-  @apply font-body text-ink-800;
-  background: radial-gradient(1200px 600px at 10% -10%, #f1ecfd 0%, transparent 55%),
-              radial-gradient(1000px 600px at 100% 0%, #e9f6f7 0%, transparent 50%),
-              #faf9fd;
-  min-height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
-::selection { background: #d5cdfb; color: #3b2676; }
+html.dark {
+  color-scheme: dark;
+  background: #11101a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #1f2937;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(139, 92, 246, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(34, 211, 238, 0.07),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(167, 139, 250, 0.06),
+      transparent 35%
+    ),
+    #f8fafc;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   DARK BODY
+   ========================================================= */
+
+html.dark body {
+  color: #e5e7eb;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(139, 92, 246, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(34, 211, 238, 0.08),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(167, 139, 250, 0.08),
+      transparent 35%
+    ),
+    #11101a;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(139, 92, 246, 0.22);
+  color: #111827;
+}
+
+html.dark ::selection {
+  background: rgba(167, 139, 250, 0.28);
+  color: #ffffff;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+}
+
+/* =========================================================
+   GLASS CARDS
+   ========================================================= */
 
 .glass {
-  background: rgba(255,255,255,0.62);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 35px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .glass-strong {
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 16px 45px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-.scrollbar-thin::-webkit-scrollbar-thumb { background: #d5cdfb; border-radius: 999px; }
+/* =========================================================
+   DARK GLASS
+   ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+html.dark .glass {
+  background: rgba(30, 29, 43, 0.72);
+  border-color: rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
+
+html.dark .glass-strong {
+  background: rgba(27, 26, 39, 0.9);
+  border-color: rgba(255, 255, 255, 0.09);
+
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   TEXT COLORS
+   ========================================================= */
+
+html.dark .text-ink-900 {
+  color: #f3f4f6 !important;
+}
+
+html.dark .text-ink-800 {
+  color: #e5e7eb !important;
+}
+
+html.dark .text-ink-700 {
+  color: #d1d5db !important;
+}
+
+html.dark .text-ink-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-ink-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-ink-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-ink-300 {
+  color: #cbd5e1 !important;
+}
+
+/* =========================================================
+   BACKGROUND COLORS
+   ========================================================= */
+
+html.dark .bg-white {
+  background-color: #1e1d2b !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #1b1a27 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #242331 !important;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #1b1a27 !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #242331 !important;
+}
+
+html.dark .bg-violet-50 {
+  background-color: rgba(124, 58, 237, 0.12) !important;
+}
+
+html.dark .bg-violet-100 {
+  background-color: rgba(124, 58, 237, 0.2) !important;
+}
+
+html.dark .bg-aqua-50 {
+  background-color: rgba(34, 211, 238, 0.1) !important;
+}
+
+html.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+}
+
+html.dark .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+/* =========================================================
+   BORDERS
+   ========================================================= */
+
+html.dark .border-white {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .border-slate-100 {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+html.dark .border-slate-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .border-gray-100 {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+html.dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .border-violet-100 {
+  border-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+html.dark .border-amber-100 {
+  border-color: rgba(245, 158, 11, 0.22) !important;
+}
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1e1d2b;
+  color: #f3f4f6;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b;
+}
+
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: rgba(139, 92, 246, 0.7);
+}
+
+/* =========================================================
+   HOVER STATES
+   ========================================================= */
+
+html.dark .hover\:bg-white:hover {
+  background-color: #242331 !important;
+}
+
+html.dark .hover\:bg-slate-50:hover {
+  background-color: #242331 !important;
+}
+
+html.dark .hover\:bg-gray-50:hover {
+  background-color: #242331 !important;
+}
+
+/* =========================================================
+   BUTTON / ICON CONTRAST
+   ========================================================= */
+
+html.dark .text-gray-900 {
+  color: #f3f4f6;
+}
+
+html.dark .text-gray-800 {
+  color: #e5e7eb;
+}
+
+html.dark .text-gray-700 {
+  color: #d1d5db;
+}
+
+html.dark .text-gray-600 {
+  color: #cbd5e1;
+}
+
+html.dark .text-gray-500 {
+  color: #94a3b8;
+}
+
+html.dark .text-gray-400 {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   VIOLET
+   ========================================================= */
+
+html.dark .text-violet-900 {
+  color: #ede9fe !important;
+}
+
+html.dark .text-violet-800 {
+  color: #ddd6fe !important;
+}
+
+html.dark .text-violet-700 {
+  color: #c4b5fd !important;
+}
+
+html.dark .text-violet-600 {
+  color: #a78bfa !important;
+}
+
+html.dark .text-violet-500 {
+  color: #a78bfa !important;
+}
+
+/* =========================================================
+   GREEN
+   ========================================================= */
+
+html.dark .text-green-900 {
+  color: #dcfce7 !important;
+}
+
+html.dark .text-green-800 {
+  color: #bbf7d0 !important;
+}
+
+html.dark .text-green-700 {
+  color: #86efac !important;
+}
+
+html.dark .text-green-600 {
+  color: #4ade80 !important;
+}
+
+/* =========================================================
+   AMBER
+   ========================================================= */
+
+html.dark .text-amber-900 {
+  color: #fef3c7 !important;
+}
+
+html.dark .text-amber-800 {
+  color: #fde68a !important;
+}
+
+html.dark .text-amber-700 {
+  color: #fcd34d !important;
+}
+
+html.dark .text-amber-600 {
+  color: #fbbf24 !important;
+}
+
+/* =========================================================
+   AQUA
+   ========================================================= */
+
+html.dark .text-aqua-900 {
+  color: #cffafe !important;
+}
+
+html.dark .text-aqua-800 {
+  color: #a5f3fc !important;
+}
+
+html.dark .text-aqua-700 {
+  color: #67e8f9 !important;
+}
+
+html.dark .text-aqua-600 {
+  color: #22d3ee !important;
+}
+
+html.dark .text-aqua-500 {
+  color: #22d3ee !important;
+}
+
+/* =========================================================
+   STREAK CARD
+   IMPORTANT:
+   The streak card remains LIGHT in dark mode.
+   Therefore the streak number MUST remain DARK.
+   ========================================================= */
+
+.streak-number {
+  color: #111827 !important;
+}
+
+.streak-days {
+  color: #374151 !important;
+}
+
+html.dark .streak-number {
+  color: #111827 !important;
+}
+
+html.dark .streak-days {
+  color: #374151 !important;
+}
+
+/* =========================================================
+   STREAK CARD BACKGROUND
+   Keep streak card readable in dark dashboard.
+   ========================================================= */
+
+html.dark .bg-amber-50 {
+  background-color: #fffbeb !important;
+}
+
+html.dark .border-amber-100 {
+  border-color: #fde68a !important;
+}
+
+/* Streak icon container */
+html.dark .bg-amber-100 {
+  background-color: #fef3c7 !important;
+}
+
+/* Streak label */
+html.dark .text-amber-600 {
+  color: #d97706 !important;
+}
+
+/* =========================================================
+   RISK / STATUS
+   ========================================================= */
+
+html.dark .bg-green-100 {
+  background-color: rgba(34, 197, 94, 0.16) !important;
+}
+
+html.dark .bg-red-100 {
+  background-color: rgba(239, 68, 68, 0.16) !important;
+}
+
+html.dark .bg-yellow-100 {
+  background-color: rgba(234, 179, 8, 0.16) !important;
+}
+
+html.dark .bg-orange-100 {
+  background-color: rgba(249, 115, 22, 0.16) !important;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #11101a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3f3d50;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #575469;
+}
+
+/* =========================================================
+   FOCUS RING
+   ========================================================= */
 
 .focus-ring {
-  @apply outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+html.dark .focus-ring:focus-visible {
+  outline-color: #a78bfa;
+}
+
+/* =========================================================
+   SHADOWS
+   ========================================================= */
+
+html.dark .shadow-sm {
+  --tw-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+html.dark .shadow {
+  --tw-shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+html.dark .shadow-md {
+  --tw-shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+html.dark .shadow-lg {
+  --tw-shadow-color: rgba(0, 0, 0, 0.35);
+}
+
+html.dark .shadow-xl {
+  --tw-shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+html.dark .streak-number,
+html.dark .streak-number.text-ink-900,
+html.dark .streak-number.text-gray-900 {
+  color: #111827 !important;
+}
+
+html.dark .streak-days,
+html.dark .streak-days.text-ink-400,
+html.dark .streak-days.text-gray-400 {
+  color: #374151 !important;
+}
+
+/* ============================================================
+   ASSISTANT CHAT RESPONSE
+   ============================================================ */
+
+/* Light mode */
+.assistant-response {
+  color: #374151 !important;
+}
+
+/* Dark mode */
+html.dark .assistant-response {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+html.dark .assistant-response p {
+  color: #e5e7eb !important;
+}
+
+/* Make source text readable too */
+html.dark .assistant-response .text-violet-500 {
+  color: #c4b5fd !important;
+}
+
+/* ============================================================
+   AUDIO PLAYER - DARK MODE
+   ============================================================ */
+
+html.dark .audio-player {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+  border-color: #374151 !important;
+}
+
+html.dark .audio-player-time {
+  color: #9ca3af !important;
+}
+
+html.dark .audio-player-control {
+  color: #d1d5db !important;
+}
+
+html.dark .audio-player-control:hover {
+  background-color: #374151 !important;
+}
+
+/* ============================================================
+   MUSIC - AI SUGGESTION CARD
+   ============================================================ */
+
+/* Dark mode */
+html.dark .music-ai-suggestion {
+  background: linear-gradient(
+    to right,
+    #1e1b2e,
+    #17232b
+  ) !important;
+
+  border-color: #3f3b5c !important;
+}
+
+html.dark .music-ai-suggestion h3,
+html.dark .music-ai-suggestion p {
+  color: #e5e7eb !important;
+}
+
+/* Keep the small description slightly softer */
+html.dark .music-ai-suggestion p {
+  color: #cbd5e1 !important;
+}
+
+/* ============================================================
+   MUSIC TRACK CARDS - DARK MODE
+   ============================================================ */
+
+html.dark .music-track-icon {
+  background: linear-gradient(
+    135deg,
+    #312b4a,
+    #252332
+  ) !important;
+
+  color: #c4b5fd !important;
+}
+
+html.dark .music-track-card {
+  background-color: #1f1d2b !important;
+  border-color: #3b3657 !important;
+}
+
+html.dark .music-track-card:hover {
+  background-color: #252238 !important;
+  border-color: #514a73 !important;
 }
