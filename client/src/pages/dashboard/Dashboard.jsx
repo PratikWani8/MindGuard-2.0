@@ -643,22 +643,19 @@ export default function Dashboard() {
               ">
 
                 <span className="
-                  font-display
-                  text-xl
-                  font-bold
-                  text-ink-900
-                ">
-                  {streak.currentStreak}
-                </span>
+                streak-number
+                font-display
+                text-xl
+                font-bold
+              ">
+                {streak.currentStreak}
+              </span>
 
                 <span className="
+                  streak-days
                   text-xs
-                  text-ink-400
                 ">
-                  {streak.currentStreak ===
-                  1
-                    ? "day"
-                    : "days"}
+                  {streak.currentStreak === 1 ? "day" : "days"}
                 </span>
 
               </div>
