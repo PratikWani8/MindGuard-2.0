@@ -21,6 +21,7 @@ import Insights from "./pages/dashboard/Insights";
 import Trends from "./pages/dashboard/Trends";
 import WellnessPlan from "./pages/dashboard/WellnessPlan";
 import Assistant from "./pages/dashboard/Assistant";
+import MindRelax from "./pages/dashboard/MindRelax";
 import Support from "./pages/dashboard/Support";
 import Profile from "./pages/dashboard/Profile";
 import Settings from "./pages/dashboard/Settings";
@@ -51,6 +52,7 @@ export default function App() {
               <Route path="/dashboard/trends" element={<Trends />} />
               <Route path="/dashboard/wellness-plan" element={<WellnessPlan />} />
               <Route path="/dashboard/assistant" element={<Assistant />} />
+              <Route path="/dashboard/mind-relax" element={<MindRelax />} />
               <Route path="/dashboard/support" element={<Support />} />
               <Route path="/dashboard/profile" element={<Profile />} />
               <Route path="/dashboard/settings" element={<Settings />} />
