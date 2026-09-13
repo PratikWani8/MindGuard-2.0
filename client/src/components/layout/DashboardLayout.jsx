@@ -24,7 +24,7 @@ export default function DashboardLayout() {
   const title = titles[location.pathname] || (location.pathname.startsWith("/dashboard/journal") ? "Journal" : "MindGuard");
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen transition-colors duration-300">
       <AmbientBackground />
       <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-4 flex gap-6">
         <aside className="hidden lg:block w-64 shrink-0 sticky top-4 h-[calc(100vh-2rem)]">
