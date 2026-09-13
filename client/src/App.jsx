@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import PublicLayout from "./components/layout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout";
@@ -29,6 +30,7 @@ import Settings from "./pages/dashboard/Settings";
 export default function App() {
   return (
     <BrowserRouter>
+     <ThemeProvider>
       <AuthProvider>
         <Routes>
           <Route element={<PublicLayout />}>
@@ -62,6 +64,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
