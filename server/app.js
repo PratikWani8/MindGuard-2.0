@@ -17,6 +17,7 @@ import aiAgentRoutes from "./routes/aiAgentRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import conversationRoutes from "./routes/conversationRoutes.js";
 import riskRoutes from "./routes/riskRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -58,6 +59,7 @@ app.use("/api/agent", aiAgentRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/risk-events", riskRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
