@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export const USE_MOCKS = import.meta.env.VITE_USE_MOCKS !== "false";
 
@@ -10,7 +10,9 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("mindguard_token");
+  const token =
+    localStorage.getItem("mindguard_token") ||
+    sessionStorage.getItem("mindguard_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -20,6 +22,7 @@ api.interceptors.response.use(
   (error) => {
     if (error?.response?.status === 401) {
       localStorage.removeItem("mindguard_token");
+      sessionStorage.removeItem("mindguard_token");
     }
     return Promise.reject(error);
   }
