@@ -16,6 +16,7 @@ const titles = {
   "/dashboard/support": "Support Resources",
   "/dashboard/profile": "Profile",
   "/dashboard/settings": "Settings",
+  "/dashboard/admin": "Administration",
 };
 
 export default function DashboardLayout() {
