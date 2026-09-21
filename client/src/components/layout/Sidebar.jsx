@@ -11,8 +11,10 @@ import {
   LifeBuoy,
   User,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "../../utils/cn";
+import { useAuth } from "../../context/AuthContext";
 
 const items = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -52,6 +54,7 @@ function NavItem({ to, label, icon: Icon, end }) {
 }
 
 export default function Sidebar({ onNavigate }) {
+  const { user } = useAuth();
   return (
     <div className="flex flex-col h-full glass-strong rounded-3xl p-4">
       <div className="flex items-center gap-2 font-display font-semibold text-ink-900 px-2 py-2 mb-4">
@@ -77,6 +80,9 @@ export default function Sidebar({ onNavigate }) {
         {bottomItems.map((it) => (
           <NavItem key={it.to} {...it} />
         ))}
+        {user?.role === "admin" && (
+          <NavItem to="/dashboard/admin" label="Administration" icon={ShieldCheck} />
+        )}
       </nav>
     </div>
   );
