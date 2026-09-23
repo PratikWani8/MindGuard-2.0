@@ -1,10 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* =========================================================
-   ROOT
-   ========================================================= */
 
 html {
   scroll-behavior: smooth;
@@ -18,10 +17,6 @@ html.dark {
 * {
   box-sizing: border-box;
 }
-
-/* =========================================================
-   BODY
-   ========================================================= */
 
 body {
   margin: 0;
