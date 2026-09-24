@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import AdminRoute from "./components/common/AdminRoute";
 import PublicLayout from "./components/layout/PublicLayout";
 import DashboardLayout from "./components/layout/DashboardLayout";
 
@@ -26,6 +27,7 @@ import MindRelax from "./pages/dashboard/MindRelax";
 import Support from "./pages/dashboard/Support";
 import Profile from "./pages/dashboard/Profile";
 import Settings from "./pages/dashboard/Settings";
+import Administration from "./pages/dashboard/Administration";
 
 export default function App() {
   return (
@@ -58,6 +60,9 @@ export default function App() {
               <Route path="/dashboard/support" element={<Support />} />
               <Route path="/dashboard/profile" element={<Profile />} />
               <Route path="/dashboard/settings" element={<Settings />} />
+              <Route element={<AdminRoute />}>
+                <Route path="/dashboard/admin" element={<Administration />} />
+              </Route>
             </Route>
           </Route>
 
