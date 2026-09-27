@@ -3,18 +3,21 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Button from "../common/Button";
 import { useAuth } from "../../context/AuthContext";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/privacy", label: "Privacy & Safety" },
-];
+import { useTranslation } from "react-i18next";
+import LanguageDropdown from "../common/LanguageDropdown";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const links = [
+    { to: "/", label: t("common.home", "Home") },
+    { to: "/about", label: t("common.about", "About") },
+    { to: "/how-it-works", label: t("common.howItWorks", "How it works") },
+    { to: "/privacy", label: t("common.privacy", "Privacy & Safety") },
+  ];
 
   return (
     <header className="sticky top-0 z-40">
@@ -47,12 +50,19 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-2">
+            <LanguageDropdown />
             {isAuthenticated ? (
-              <Button size="sm" onClick={() => navigate("/dashboard")}>Go to dashboard</Button>
+              <Button size="sm" onClick={() => navigate("/dashboard")}>
+                {t("common.goToDashboard", "Go to dashboard")}
+              </Button>
             ) : (
               <>
-                <Button variant="ghost" size="sm" onClick={() => navigate("/login")}>Log in</Button>
-                <Button size="sm" onClick={() => navigate("/register")}>Get started</Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/login")}>
+                  {t("common.login", "Log in")}
+                </Button>
+                <Button size="sm" onClick={() => navigate("/register")}>
+                  {t("common.register", "Get started")}
+                </Button>
               </>
             )}
           </div>
@@ -71,11 +81,17 @@ export default function Navbar() {
             ))}
             <div className="h-px bg-violet-100 my-2" />
             {isAuthenticated ? (
-              <Button size="sm" onClick={() => { setOpen(false); navigate("/dashboard"); }}>Go to dashboard</Button>
+              <Button size="sm" onClick={() => { setOpen(false); navigate("/dashboard"); }}>
+                {t("common.goToDashboard", "Go to dashboard")}
+              </Button>
             ) : (
               <div className="flex gap-2">
-                <Button variant="secondary" size="sm" className="flex-1" onClick={() => { setOpen(false); navigate("/login"); }}>Log in</Button>
-                <Button size="sm" className="flex-1" onClick={() => { setOpen(false); navigate("/register"); }}>Get started</Button>
+                <Button variant="secondary" size="sm" className="flex-1" onClick={() => { setOpen(false); navigate("/login"); }}>
+                  {t("common.login", "Log in")}
+                </Button>
+                <Button size="sm" className="flex-1" onClick={() => { setOpen(false); navigate("/register"); }}>
+                  {t("common.register", "Get started")}
+                </Button>
               </div>
             )}
           </div>
