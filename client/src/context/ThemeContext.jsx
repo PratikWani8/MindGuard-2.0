@@ -27,12 +27,19 @@ export function ThemeProvider({ children }) {
     );
   };
 
+  const setThemeMode = (mode) => {
+    if (mode === "dark" || mode === "light") {
+      setTheme(mode);
+    }
+  };
+
   return (
     <ThemeContext.Provider
       value={{
         theme,
         isDark: theme === "dark",
         toggleTheme,
+        setTheme: setThemeMode,
       }}
     >
       {children}
