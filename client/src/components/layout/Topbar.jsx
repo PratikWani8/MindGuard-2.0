@@ -8,20 +8,23 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageDropdown from "../common/LanguageDropdown";
 
 export default function Topbar({ onMenuClick, title }) {
   const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
   return (
-    <div className="glass-strong rounded-2xl px-4 md:px-6 py-3.5 flex items-center justify-between mb-6 transition-colors duration-300">
+    <div className="relative z-40 glass-strong rounded-2xl px-4 md:px-6 py-3.5 flex items-center justify-between mb-6 transition-colors duration-300">
       <div className="flex items-center gap-3">
         <button
           className="lg:hidden p-2 -ml-1 rounded-xl hover:bg-violet-50 dark:hover:bg-white/10 focus-ring text-ink-700 dark:text-white"
           onClick={onMenuClick}
-          aria-label="Open menu"
+          aria-label={t("topbar.openMenu", "Open menu")}
         >
           <Menu size={20} />
         </button>
@@ -32,6 +35,9 @@ export default function Topbar({ onMenuClick, title }) {
       </div>
 
       <div className="flex items-center gap-2">
+        {/* Language Dropdown */}
+        <LanguageDropdown />
+
         {/* Theme Toggle */}
         <button
           type="button"
@@ -46,13 +52,13 @@ export default function Topbar({ onMenuClick, title }) {
           "
           aria-label={
             isDark
-              ? "Switch to light mode"
-              : "Switch to dark mode"
+              ? t("topbar.switchToLight", "Switch to light mode")
+              : t("topbar.switchToDark", "Switch to dark mode")
           }
           title={
             isDark
-              ? "Switch to light mode"
-              : "Switch to dark mode"
+              ? t("topbar.switchToLight", "Switch to light mode")
+              : t("topbar.switchToDark", "Switch to dark mode")
           }
         >
           {isDark ? (
@@ -88,7 +94,8 @@ export default function Topbar({ onMenuClick, title }) {
             focus-ring
             text-ink-400 dark:text-gray-400
           "
-          aria-label="Log out"
+          aria-label={t("common.logout", "Log out")}
+          title={t("common.logout", "Log out")}
         >
           <LogOut size={19} />
         </button>
