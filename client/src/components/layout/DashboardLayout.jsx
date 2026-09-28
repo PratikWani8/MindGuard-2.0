@@ -1,28 +1,32 @@
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import AmbientBackground from "./AmbientBackground";
 
-const titles = {
-  "/dashboard": "Dashboard",
-  "/dashboard/checkin": "Daily Check-in",
-  "/dashboard/journal": "Journal",
-  "/dashboard/insights": "AI Insights",
-  "/dashboard/trends": "Mood & Stress Trends",
-  "/dashboard/wellness-plan": "Wellness Plan",
-  "/dashboard/assistant": "AI Assistant",
-  "/dashboard/support": "Support Resources",
-  "/dashboard/profile": "Profile",
-  "/dashboard/settings": "Settings",
-  "/dashboard/admin": "Administration",
-};
-
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const title = titles[location.pathname] || (location.pathname.startsWith("/dashboard/journal") ? "Journal" : "MindGuard");
+  const { t } = useTranslation();
+
+  const titles = {
+    "/dashboard": t("common.dashboard", "Dashboard"),
+    "/dashboard/checkin": t("common.dailyCheckin", "Daily Check-in"),
+    "/dashboard/journal": t("common.journal", "Journal"),
+    "/dashboard/insights": t("common.insights", "AI Insights"),
+    "/dashboard/trends": t("common.trends", "Mood & Stress Trends"),
+    "/dashboard/wellness-plan": t("common.wellnessPlan", "Wellness Plan"),
+    "/dashboard/assistant": t("common.assistant", "AI Assistant"),
+    "/dashboard/mind-relax": t("common.mindRelax", "Mind Relax"),
+    "/dashboard/support": t("common.support", "Support Resources"),
+    "/dashboard/profile": t("common.profile", "Profile"),
+    "/dashboard/settings": t("common.settings", "Settings"),
+    "/dashboard/admin": t("common.administration", "Administration"),
+  };
+
+  const title = titles[location.pathname] || (location.pathname.startsWith("/dashboard/journal") ? t("common.journal", "Journal") : "MindGuard");
 
   return (
     <div className="min-h-screen transition-colors duration-300">
