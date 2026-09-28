@@ -15,23 +15,7 @@ import {
 } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { useAuth } from "../../context/AuthContext";
-
-const items = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/dashboard/checkin", label: "Daily Check-in", icon: PenSquare },
-  { to: "/dashboard/journal", label: "Journal", icon: BookOpen },
-  { to: "/dashboard/insights", label: "AI Insights", icon: Sparkles },
-  { to: "/dashboard/trends", label: "Trends", icon: TrendingUp },
-  { to: "/dashboard/wellness-plan", label: "Wellness Plan", icon: Leaf },
-  { to: "/dashboard/assistant", label: "AI Assistant", icon: MessagesSquare },
-  { to: "/dashboard/mind-relax", label: "Mind Relax", icon: Music2 },
-  { to: "/dashboard/support", label: "Support", icon: LifeBuoy },
-];
-
-const bottomItems = [
-  { to: "/dashboard/profile", label: "Profile", icon: User },
-  { to: "/dashboard/settings", label: "Settings", icon: Settings },
-];
+import { useTranslation } from "react-i18next";
 
 function NavItem({ to, label, icon: Icon, end }) {
   return (
@@ -55,6 +39,25 @@ function NavItem({ to, label, icon: Icon, end }) {
 
 export default function Sidebar({ onNavigate }) {
   const { user } = useAuth();
+  const { t } = useTranslation();
+
+  const items = [
+    { to: "/dashboard", label: t("common.dashboard", "Dashboard"), icon: LayoutDashboard, end: true },
+    { to: "/dashboard/checkin", label: t("common.dailyCheckin", "Daily Check-in"), icon: PenSquare },
+    { to: "/dashboard/journal", label: t("common.journal", "Journal"), icon: BookOpen },
+    { to: "/dashboard/insights", label: t("common.insights", "AI Insights"), icon: Sparkles },
+    { to: "/dashboard/trends", label: t("common.trends", "Trends"), icon: TrendingUp },
+    { to: "/dashboard/wellness-plan", label: t("common.wellnessPlan", "Wellness Plan"), icon: Leaf },
+    { to: "/dashboard/assistant", label: t("common.assistant", "AI Assistant"), icon: MessagesSquare },
+    { to: "/dashboard/mind-relax", label: t("common.mindRelax", "Mind Relax"), icon: Music2 },
+    { to: "/dashboard/support", label: t("common.support", "Support"), icon: LifeBuoy },
+  ];
+
+  const bottomItems = [
+    { to: "/dashboard/profile", label: t("common.profile", "Profile"), icon: User },
+    { to: "/dashboard/settings", label: t("common.settings", "Settings"), icon: Settings },
+  ];
+
   return (
     <div className="flex flex-col h-full glass-strong rounded-3xl p-4">
       <div className="flex items-center gap-2 font-display font-semibold text-ink-900 px-2 py-2 mb-4">
@@ -81,7 +84,7 @@ export default function Sidebar({ onNavigate }) {
           <NavItem key={it.to} {...it} />
         ))}
         {user?.role === "admin" && (
-          <NavItem to="/dashboard/admin" label="Administration" icon={ShieldCheck} />
+          <NavItem to="/dashboard/admin" label={t("common.administration", "Administration")} icon={ShieldCheck} />
         )}
       </nav>
     </div>
