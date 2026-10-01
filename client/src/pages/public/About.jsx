@@ -68,13 +68,17 @@ const creators = [
   },
 ];
 
+import { useTranslation } from "react-i18next";
+
 export default function About() {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-6 py-16">
 
       {/* About Heading */}
       <SectionHeading
-        eyebrow="About MindGuard"
+        eyebrow={t("common.about")}
         title="A calmer way to notice how you're really doing"
         description="MindGuard was built for a simple reason: most people don't get a clear signal about their own wellbeing until it's already a crisis. We wanted an early, gentle, evidence-informed nudge instead."
       />
