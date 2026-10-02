@@ -25,11 +25,15 @@ const sections = [
   },
 ];
 
+import { useTranslation } from "react-i18next";
+
 export default function Privacy() {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-6 py-16">
       <SectionHeading
-        eyebrow="Privacy & Safety"
+        eyebrow={t("common.privacy")}
         title="Built to protect what you share"
         description="Mental wellbeing data is sensitive by nature. Here's exactly how MindGuard handles it, and what happens when the system detects something serious."
       />
