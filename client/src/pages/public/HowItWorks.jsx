@@ -12,11 +12,15 @@ const flow = [
   { icon: LifeBuoy, title: "Human support when needed", body: "Elevated or urgent signals surface real counselor and emergency resources, with human review of flagged cases." },
 ];
 
+import { useTranslation } from "react-i18next";
+
 export default function HowItWorks() {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-6 py-16">
       <SectionHeading
-        eyebrow="How it works"
+        eyebrow={t("common.howItWorks")}
         title="From a two-minute check-in to a clear next step"
         description="Every part of MindGuard is designed to be transparent about what it knows and doesn't know and to bring in real people the moment that's the right call."
       />
