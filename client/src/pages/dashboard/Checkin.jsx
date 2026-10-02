@@ -20,6 +20,7 @@ import GlassCard from "../../components/common/GlassCard";
 import Button from "../../components/common/Button";
 import { submitCheckin } from "../../services/checkinApi";
 import { cn } from "../../utils/cn";
+import { useTranslation } from "react-i18next";
 
 const moods = [
   {
@@ -128,6 +129,15 @@ const steps = ["mood", "vitals", "journal", "done"];
 
 export default function Checkin() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const moodLabels = {
+    1: t("checkin.veryLow", "Very low"),
+    2: t("checkin.low", "Low"),
+    3: t("checkin.neutral", "Neutral"),
+    4: t("checkin.good", "Good"),
+    5: t("checkin.veryGood", "Very good"),
+  };
 
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -214,7 +224,7 @@ export default function Checkin() {
         <div className="mb-6">
           <div className="flex justify-between text-xs text-ink-400 dark:text-gray-500 mb-1.5">
             <span>
-              Step {step + 1} of {steps.length - 1}
+              {t("checkin.step", "Step")} {step + 1} {t("checkin.of", "of")} {steps.length - 1}
             </span>
 
             <span>{progress}%</span>
@@ -274,11 +284,11 @@ export default function Checkin() {
           {steps[step] === "mood" && (
             <GlassCard strong>
               <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
-                How are you feeling right now?
+                {t("checkin.moodQuestion", "How are you feeling right now?")}
               </h2>
 
               <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
-                Pick the option that feels closest.
+                {t("checkin.moodSubtitle", "Pick the option that feels closest.")}
               </p>
 
               <div className="grid grid-cols-5 gap-2 mt-6">
@@ -329,7 +339,7 @@ export default function Checkin() {
                       </span>
 
                       <span className="text-[11px] font-medium text-ink-600 dark:text-gray-300 text-center leading-tight">
-                        {m.label}
+                        {moodLabels[m.value] || m.label}
                       </span>
                     </button>
                   );
@@ -343,18 +353,18 @@ export default function Checkin() {
             <GlassCard strong className="space-y-7">
               <div>
                 <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
-                  A few more signals
+                  {t("checkin.vitalsTitle")}
                 </h2>
 
                 <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
-                  This helps MindGuard spot patterns over time.
+                  {t("checkin.vitalsSubtitle")}
                 </p>
               </div>
 
               <SliderField
                 icon={Flame}
-                label="Stress level"
-                hint="1 = minimal, 10 = overwhelming"
+                label={t("checkin.stressQuestion")}
+                hint={t("checkin.stressSubtitle")}
                 value={data.stressLevel}
                 onChange={(value) =>
                   update({
@@ -365,8 +375,8 @@ export default function Checkin() {
 
               <SliderField
                 icon={Zap}
-                label="Energy level"
-                hint="1 = drained, 10 = energized"
+                label={t("checkin.energyQuestion")}
+                hint={t("checkin.energySubtitle")}
                 value={data.energyLevel}
                 onChange={(value) =>
                   update({
@@ -377,7 +387,8 @@ export default function Checkin() {
 
               <SliderField
                 icon={Moon}
-                label="Sleep last night (hours)"
+                label={t("checkin.sleepHoursQuestion")}
+                hint={t("checkin.sleepHoursSubtitle")}
                 min={0}
                 max={24}
                 value={data.sleepHours}
@@ -390,8 +401,8 @@ export default function Checkin() {
 
               <SliderField
                 icon={Moon}
-                label="Sleep quality"
-                hint="1 = poor, 10 = excellent"
+                label={t("checkin.sleepQualityQuestion")}
+                hint={t("checkin.sleepQualitySubtitle")}
                 value={data.sleepQuality}
                 onChange={(value) =>
                   update({
@@ -402,8 +413,8 @@ export default function Checkin() {
 
               <SliderField
                 icon={Focus}
-                label="Focus today"
-                hint="1 = scattered, 10 = sharp"
+                label={t("checkin.focusQuestion")}
+                hint={t("checkin.focusSubtitle")}
                 value={data.focusLevel}
                 onChange={(value) =>
                   update({
@@ -418,14 +429,14 @@ export default function Checkin() {
           {steps[step] === "journal" && (
             <GlassCard strong>
               <h2 className="font-display text-xl font-semibold text-ink-900 dark:text-white">
-                Anything on your mind?{" "}
+                {t("checkin.journalQuestion")}{" "}
                 <span className="text-ink-400 dark:text-gray-500 font-normal text-sm">
-                  (optional)
+                  ({t("common.optional")})
                 </span>
               </h2>
 
               <p className="text-sm text-ink-400 dark:text-gray-500 mt-1">
-                MindGuard can gently analyze this for patterns and themes.
+                {t("checkin.journalSubtitle")}
               </p>
 
               <textarea
@@ -437,7 +448,7 @@ export default function Checkin() {
                 }
                 rows={7}
                 maxLength={10000}
-                placeholder="Write freely — there's no right way to do this…"
+                placeholder={t("checkin.journalPlaceholder")}
                 className="
                   w-full
                   mt-4
@@ -463,7 +474,7 @@ export default function Checkin() {
               />
 
               <p className="text-xs text-ink-300 dark:text-gray-600 text-right mt-1">
-                {data.journalText.length} characters
+                {data.journalText.length} {t("common.characters")}
               </p>
             </GlassCard>
           )}
@@ -487,19 +498,18 @@ export default function Checkin() {
               </div>
 
               <h2 className="font-display text-2xl font-semibold text-ink-900 dark:text-white">
-                Check-in complete
+                {t("checkin.doneTitle")}
               </h2>
 
               <p className="text-ink-400 dark:text-gray-500 mt-2 max-w-sm mx-auto">
-                Thanks for showing up for yourself today. Your dashboard has
-                been updated.
+                {t("checkin.doneSubtitle")}
               </p>
 
               <Button
                 className="mt-6"
                 onClick={() => navigate("/dashboard")}
               >
-                Go to dashboard
+                {t("checkin.goToDashboard")}
               </Button>
             </GlassCard>
           )}
@@ -515,7 +525,7 @@ export default function Checkin() {
             disabled={step === 0 || submitting}
           >
             <ArrowLeft size={16} />
-            Back
+            {t("common.back")}
           </Button>
 
           <Button
@@ -523,10 +533,10 @@ export default function Checkin() {
             disabled={submitting}
           >
             {submitting
-              ? "Saving…"
+              ? t("checkin.saving")
               : steps[step] === "journal"
-                ? "Finish check-in"
-                : "Continue"}
+                ? t("checkin.finishCheckin")
+                : t("common.continue")}
 
             {!submitting && <ArrowRight size={16} />}
           </Button>
