@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   AlertTriangle,
 } from "lucide-react";
-
+import { useTranslation } from "react-i18next";
 import GlassCard from "../../components/common/GlassCard";
 import Button from "../../components/common/Button";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
@@ -29,6 +29,7 @@ const emotionColors = [
 ];
 
 export default function JournalEntry() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const location = useLocation();
 
@@ -93,7 +94,7 @@ export default function JournalEntry() {
   if (loading) {
     return (
       <LoadingSpinner
-        label="Loading entry"
+        label={t("common.loading")}
         size="lg"
       />
     );
@@ -102,7 +103,7 @@ export default function JournalEntry() {
   if (!entry) {
     return (
       <GlassCard>
-        Entry not found.
+        {t("journal.noEntriesFound")}
       </GlassCard>
     );
   }
@@ -122,25 +123,25 @@ export default function JournalEntry() {
 
       <Link
         to="/dashboard/journal/history"
-        className="inline-flex items-center gap-1.5 text-sm text-ink-500 hover:text-violet-600"
+        className="inline-flex items-center gap-1.5 text-sm text-ink-500 hover:text-violet-600 dark:hover:text-violet-400"
       >
         <ArrowLeft size={16} />
-        Back to journal history
+        {t("journal.backToHistory")}
       </Link>
 
       {/* Journal */}
       <GlassCard strong>
         <div className="flex items-center justify-between">
-          <span className="text-xs text-ink-300">
+          <span className="text-xs text-ink-300 dark:text-gray-500">
             {entry.date}
           </span>
         </div>
 
-        <h1 className="font-display text-2xl font-semibold text-ink-900 mt-1">
+        <h1 className="font-display text-2xl font-semibold text-ink-900 dark:text-white mt-1">
           {entry.title}
         </h1>
 
-        <p className="text-ink-600 leading-relaxed mt-4 whitespace-pre-line">
+        <p className="text-ink-600 dark:text-gray-200 leading-relaxed mt-4 whitespace-pre-line">
           {entry.content}
         </p>
       </GlassCard>
@@ -153,13 +154,13 @@ export default function JournalEntry() {
             size={26}
           />
 
-          <p className="text-ink-500 text-sm mb-4">
-            This entry hasn't been analyzed yet.
+          <p className="text-ink-500 dark:text-gray-400 text-sm mb-4">
+            {t("journal.notAnalyzedYet")}
           </p>
 
           <Button onClick={runAnalysis}>
             <Sparkles size={16} />
-            Analyze with AI
+            {t("journal.analyzeWithAi")}
           </Button>
         </GlassCard>
       )}
@@ -167,7 +168,7 @@ export default function JournalEntry() {
       {/* Loading */}
       {analyzing && (
         <LoadingSpinner
-          label="Analyzing your entry with AI"
+          label={t("journal.analyzingWithAi")}
           size="lg"
         />
       )}
@@ -183,19 +184,19 @@ export default function JournalEntry() {
               <div className="flex items-center gap-2 mb-3">
                 <Brain
                   size={18}
-                  className="text-violet-600"
+                  className="text-violet-600 dark:text-violet-400"
                 />
 
-                <p className="font-display font-semibold text-ink-900">
-                  Emotion breakdown
+                <p className="font-display font-semibold text-ink-900 dark:text-white">
+                  {t("journal.emotionBreakdown")}
                 </p>
               </div>
 
               {emotionData.length > 0 ? (
                 <EmotionDonut data={emotionData} />
               ) : (
-                <p className="text-sm text-ink-400">
-                  No emotion data available.
+                <p className="text-sm text-ink-400 dark:text-gray-500">
+                  {t("journal.noEmotionData")}
                 </p>
               )}
             </GlassCard>
@@ -205,11 +206,11 @@ export default function JournalEntry() {
               <div className="flex items-center gap-2 mb-3">
                 <Tag
                   size={17}
-                  className="text-violet-600"
+                  className="text-violet-600 dark:text-violet-400"
                 />
 
-                <p className="font-display font-semibold text-ink-900">
-                  Detected themes
+                <p className="font-display font-semibold text-ink-900 dark:text-white">
+                  {t("journal.detectedThemes")}
                 </p>
               </div>
 
@@ -218,15 +219,15 @@ export default function JournalEntry() {
                   {entry.themes.map((theme) => (
                     <span
                       key={theme}
-                      className="text-xs bg-violet-50 text-violet-700 px-3 py-1.5 rounded-full font-medium"
+                      className="text-xs bg-violet-50 dark:bg-violet-950/50 text-violet-700 dark:text-violet-300 px-3 py-1.5 rounded-full font-medium"
                     >
                       {theme}
                     </span>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-ink-400">
-                  No themes detected.
+                <p className="text-sm text-ink-400 dark:text-gray-500">
+                  {t("journal.noThemesDetected")}
                 </p>
               )}
             </GlassCard>
@@ -237,22 +238,22 @@ export default function JournalEntry() {
           <GlassCard>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-ink-400">
-                  Overall sentiment
+                <p className="text-xs text-ink-400 dark:text-gray-500">
+                  {t("journal.overallSentiment")}
                 </p>
 
-                <p className="font-display text-xl font-semibold text-ink-900 capitalize mt-1">
+                <p className="font-display text-xl font-semibold text-ink-900 dark:text-white capitalize mt-1">
                   {entry.sentiment}
                 </p>
               </div>
 
               <div
-                className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium capitalize ${
                   entry.sentiment === "positive"
-                    ? "bg-green-50 text-green-700"
+                    ? "bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
                     : entry.sentiment === "negative"
-                    ? "bg-orange-50 text-orange-700"
-                    : "bg-gray-50 text-gray-600"
+                    ? "bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300"
+                    : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
                 }`}
               >
                 {entry.sentiment}
@@ -265,22 +266,21 @@ export default function JournalEntry() {
             <div className="flex items-center gap-2 mb-2">
               <Sparkles
                 size={17}
-                className="text-violet-600"
+                className="text-violet-600 dark:text-violet-400"
               />
 
-              <p className="font-display font-semibold text-ink-900">
-                AI insight
+              <p className="font-display font-semibold text-ink-900 dark:text-white">
+                {t("insights.aiInsight")}
               </p>
             </div>
 
-            <p className="text-sm text-ink-500 leading-relaxed">
+            <p className="text-sm text-ink-500 dark:text-gray-300 leading-relaxed">
               {entry.insight ||
-                "No insight available."}
+                t("insights.defaultInsight")}
             </p>
 
-            <p className="text-[11px] text-ink-300 mt-3">
-              This is a wellbeing-support observation,
-              not a diagnosis.
+            <p className="text-[11px] text-ink-300 dark:text-gray-500 mt-3">
+              {t("insights.disclaimer")}
             </p>
           </GlassCard>
 
@@ -290,11 +290,11 @@ export default function JournalEntry() {
               <div className="flex items-center gap-2 mb-3">
                 <Brain
                   size={17}
-                  className="text-violet-600"
+                  className="text-violet-600 dark:text-violet-400"
                 />
 
-                <p className="font-display font-semibold text-ink-900">
-                  AI observations
+                <p className="font-display font-semibold text-ink-900 dark:text-white">
+                  {t("insights.title")}
                 </p>
               </div>
 
@@ -303,7 +303,7 @@ export default function JournalEntry() {
                   (insight, index) => (
                     <div
                       key={index}
-                      className="flex gap-2 text-sm text-ink-500"
+                      className="flex gap-2 text-sm text-ink-500 dark:text-gray-300"
                     >
                       <span className="text-violet-500">
                         •
@@ -332,17 +332,17 @@ export default function JournalEntry() {
                   ) : (
                     <ShieldCheck
                       size={18}
-                      className="text-violet-600"
+                      className="text-violet-600 dark:text-violet-400"
                     />
                   )}
 
                   <div>
-                    <p className="font-display font-semibold text-ink-900">
-                      Support level
+                    <p className="font-display font-semibold text-ink-900 dark:text-white">
+                      {t("insights.currentStatus")}
                     </p>
 
-                    <p className="text-xs text-ink-400 mt-0.5">
-                      AI-generated wellbeing signal
+                    <p className="text-xs text-ink-400 dark:text-gray-500 mt-0.5">
+                      {t("insights.disclaimer")}
                     </p>
                   </div>
                 </div>
@@ -351,11 +351,11 @@ export default function JournalEntry() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium capitalize ${
                     entry.supportLevel ===
                     "urgent_support"
-                      ? "bg-orange-50 text-orange-700"
+                      ? "bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300"
                       : entry.supportLevel ===
                         "elevated"
-                      ? "bg-amber-50 text-amber-700"
-                      : "bg-green-50 text-green-700"
+                      ? "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300"
+                      : "bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
                   }`}
                 >
                   {entry.supportLevel.replace(
