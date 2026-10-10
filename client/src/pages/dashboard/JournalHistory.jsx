@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, ArrowRight, BookOpen } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import GlassCard from "../../components/common/GlassCard";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import EmptyState from "../../components/common/EmptyState";
@@ -14,6 +15,7 @@ const sentimentDot = {
 };
 
 export default function JournalHistory() {
+  const { t } = useTranslation();
   const [journals, setJournals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -57,27 +59,27 @@ export default function JournalHistory() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search your journal entries…"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-violet-100 bg-white/70 text-sm focus-ring focus:border-violet-300"
+            placeholder={t("journal.searchPlaceholder")}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-violet-100 dark:border-white/10 bg-white/70 dark:bg-white/[0.04] text-sm text-ink-800 dark:text-gray-100 focus-ring focus:border-violet-300 dark:focus:border-violet-500"
           />
         </div>
       </GlassCard>
 
       {loading ? (
-        <LoadingSpinner label="Loading your journal" size="lg" />
+        <LoadingSpinner label={t("journal.loadingEntries")} size="lg" />
       ) : filtered.length === 0 ? (
         <GlassCard>
           <EmptyState
             icon={BookOpen}
-            title="No entries found"
-            description="Write a new journal entry to get started."
+            title={t("journal.noEntriesFound")}
+            description={t("journal.noEntriesFoundDesc")}
           />
         </GlassCard>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((j) => (
             <Link key={j.id} to={`/dashboard/journal/${j.id}`}>
-              <GlassCard className="h-full hover:bg-white/80 transition-colors">
+              <GlassCard className="h-full hover:bg-white/80 dark:hover:bg-white/[0.08] transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span
                     className={cn(
@@ -86,16 +88,16 @@ export default function JournalHistory() {
                     )}
                   />
 
-                  <span className="text-[11px] text-ink-300">
+                  <span className="text-[11px] text-ink-300 dark:text-gray-500">
                     {j.date}
                   </span>
                 </div>
 
-                <p className="font-semibold text-sm text-ink-800">
+                <p className="font-semibold text-sm text-ink-800 dark:text-gray-100">
                   {j.title}
                 </p>
 
-                <p className="text-xs text-ink-400 mt-1 line-clamp-3">
+                <p className="text-xs text-ink-400 dark:text-gray-400 mt-1 line-clamp-3">
                   {j.excerpt}
                 </p>
 
@@ -104,7 +106,7 @@ export default function JournalHistory() {
                     {j.themes.slice(0, 2).map((theme) => (
                       <span
                         key={theme}
-                        className="text-[10px] bg-violet-50 text-violet-600 px-2 py-1 rounded-full font-medium"
+                        className="text-[10px] bg-violet-50 dark:bg-violet-950/50 text-violet-600 dark:text-violet-300 px-2 py-1 rounded-full font-medium"
                       >
                         {theme}
                       </span>
@@ -112,8 +114,8 @@ export default function JournalHistory() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-1 text-xs text-violet-600 font-medium mt-3">
-                  Open entry
+                <div className="flex items-center gap-1 text-xs text-violet-600 dark:text-violet-400 font-medium mt-3">
+                  {t("common.viewEntry")}
                   <ArrowRight size={12} />
                 </div>
               </GlassCard>
