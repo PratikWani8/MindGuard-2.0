@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import GlassCard from "../../components/common/GlassCard";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import MultiTrendChart from "../../components/charts/MultiTrendChart";
@@ -6,16 +7,17 @@ import MoodTrendChart from "../../components/charts/MoodTrendChart";
 import { fetchMoodTrend } from "../../services/checkinApi";
 import { cn } from "../../utils/cn";
 
-const ranges = [
-  { key: "7d", label: "7 days" },
-  { key: "30d", label: "30 days" },
-];
-
 export default function Trends() {
+  const { t } = useTranslation();
   const [range, setRange] = useState("7d");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const ranges = [
+    { key: "7d", label: t("trends.sevenDays") },
+    { key: "30d", label: t("trends.thirtyDays") },
+  ];
 
   useEffect(() => {
     let mounted = true;
@@ -26,8 +28,6 @@ export default function Trends() {
         setError("");
 
         const response = await fetchMoodTrend(range);
-
-        console.log("TREND RESPONSE:", response);
 
         if (!mounted) return;
 
@@ -48,7 +48,7 @@ export default function Trends() {
           setError(
             err?.response?.data?.message ||
               err?.message ||
-              "Failed to load trend data"
+              t("trends.unableToLoad")
           );
           setData([]);
         }
@@ -64,7 +64,7 @@ export default function Trends() {
     return () => {
       mounted = false;
     };
-  }, [range]);
+  }, [range, t]);
 
   return (
     <div className="space-y-6">
@@ -73,16 +73,16 @@ export default function Trends() {
         className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
       >
         <div>
-          <p className="font-display text-xl font-semibold text-ink-900">
-            Your wellbeing over time
+          <p className="font-display text-xl font-semibold text-ink-900 dark:text-white">
+            {t("trends.title")}
           </p>
 
-          <p className="text-sm text-ink-400 mt-1">
-            Compare mood, stress, sleep and focus across recent check-ins.
+          <p className="text-sm text-ink-400 dark:text-gray-400 mt-1">
+            {t("trends.subtitle")}
           </p>
         </div>
 
-        <div className="flex gap-1.5 bg-white/60 rounded-xl p-1">
+        <div className="flex gap-1.5 bg-white/60 dark:bg-white/[0.06] rounded-xl p-1">
           {ranges.map((r) => (
             <button
               key={r.key}
@@ -92,7 +92,7 @@ export default function Trends() {
                 "text-xs font-medium px-3.5 py-2 rounded-lg transition-colors",
                 range === r.key
                   ? "bg-violet-500 text-white shadow-soft"
-                  : "text-ink-500 hover:bg-white"
+                  : "text-ink-500 dark:text-gray-300 hover:bg-white dark:hover:bg-white/10"
               )}
             >
               {r.label}
@@ -102,15 +102,15 @@ export default function Trends() {
       </GlassCard>
 
       {loading ? (
-        <LoadingSpinner label="Loading trend data" size="lg" />
+        <LoadingSpinner label={t("trends.loadingTrends")} size="lg" />
       ) : error ? (
         <GlassCard>
           <div className="text-center py-10">
             <p className="text-sm font-semibold text-red-500">
-              Unable to load trends
+              {t("trends.unableToLoad")}
             </p>
 
-            <p className="text-sm text-ink-400 mt-2">
+            <p className="text-sm text-ink-400 dark:text-gray-400 mt-2">
               {error}
             </p>
 
@@ -119,27 +119,27 @@ export default function Trends() {
               onClick={() => setRange((current) => current)}
               className="mt-4 px-4 py-2 rounded-lg bg-violet-500 text-white text-sm"
             >
-              Try Again
+              {t("common.tryAgain")}
             </button>
           </div>
         </GlassCard>
       ) : data.length === 0 ? (
         <GlassCard>
           <div className="text-center py-10">
-            <p className="font-semibold text-ink-900">
-              No trend data yet
+            <p className="font-semibold text-ink-900 dark:text-white">
+              {t("trends.noDataYet")}
             </p>
 
-            <p className="text-sm text-ink-400 mt-2">
-              Complete a few check-ins to see your wellbeing trends.
+            <p className="text-sm text-ink-400 dark:text-gray-400 mt-2">
+              {t("trends.noDataDesc")}
             </p>
           </div>
         </GlassCard>
       ) : (
         <>
           <GlassCard>
-            <p className="font-display font-semibold text-ink-900 mb-3">
-              Combined view
+            <p className="font-display font-semibold text-ink-900 dark:text-white mb-3">
+              {t("trends.combinedView")}
             </p>
 
             <MultiTrendChart data={data} />
@@ -147,49 +147,47 @@ export default function Trends() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <GlassCard>
-              <p className="font-display font-semibold text-ink-900 mb-1">
-                Stress trajectory
+              <p className="font-display font-semibold text-ink-900 dark:text-white mb-1">
+                {t("trends.stressTrajectory")}
               </p>
 
-              <p className="text-xs text-ink-400 mb-2">
-                Higher values indicate more perceived stress.
+              <p className="text-xs text-ink-400 dark:text-gray-400 mb-2">
+                {t("trends.stressDesc")}
               </p>
 
               <MoodTrendChart
                 data={data}
                 dataKey="stress"
                 color="#e8823d"
-                label="Stress"
+                label={t("trends.stress")}
               />
             </GlassCard>
 
             <GlassCard>
-              <p className="font-display font-semibold text-ink-900 mb-1">
-                Sleep vs mood correlation
+              <p className="font-display font-semibold text-ink-900 dark:text-white mb-1">
+                {t("trends.sleepVsMood")}
               </p>
 
-              <p className="text-xs text-ink-400 mb-2">
-                Sleep hours often move ahead of mood shifts.
+              <p className="text-xs text-ink-400 dark:text-gray-400 mb-2">
+                {t("trends.sleepVsMoodDesc")}
               </p>
 
               <MoodTrendChart
                 data={data}
                 dataKey="sleep"
                 color="#3bb3c4"
-                label="Sleep"
+                label={t("trends.sleep")}
               />
             </GlassCard>
           </div>
 
-          <GlassCard className="border border-amber-100 bg-amber-50/40">
-            <p className="text-sm font-semibold text-amber-700">
-              Anomaly detected
+          <GlassCard className="border border-amber-100 dark:border-amber-900/40 bg-amber-50/40 dark:bg-amber-950/20">
+            <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">
+              {t("trends.anomalyDetected")}
             </p>
 
-            <p className="text-sm text-ink-500 mt-1">
-              Stress rose sharply for 3 consecutive days while sleep dropped
-              below your usual average - a pattern worth a short recovery
-              break.
+            <p className="text-sm text-ink-500 dark:text-gray-300 mt-1">
+              {t("trends.anomalyDesc")}
             </p>
           </GlassCard>
         </>
