@@ -7,6 +7,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import GlassCard from "../../components/common/GlassCard";
 import Button from "../../components/common/Button";
@@ -22,6 +23,7 @@ import {
 } from "../../services/insightApi";
 
 export default function Insights() {
+  const { t } = useTranslation();
   const [status, setStatus] = useState(null);
   const [insight, setInsight] = useState(null);
   const [patterns, setPatterns] = useState(null);
@@ -59,7 +61,7 @@ export default function Insights() {
   if (loading) {
     return (
       <LoadingSpinner
-        label="Analyzing your recent patterns"
+        label={t("common.loading")}
         size="lg"
       />
     );
@@ -75,11 +77,11 @@ export default function Insights() {
       >
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-violet-500 mb-1">
-            Current status
+            {t("insights.currentStatus")}
           </p>
 
-          <h2 className="font-display text-2xl font-semibold text-ink-900">
-            {status?.summary || "No wellbeing data yet"}
+          <h2 className="font-display text-2xl font-semibold text-ink-900 dark:text-white">
+            {status?.summary || t("insights.noData")}
           </h2>
         </div>
 
@@ -92,8 +94,8 @@ export default function Insights() {
       {/* Emotional patterns */}
       <div className="grid md:grid-cols-2 gap-6">
         <GlassCard>
-          <p className="font-display font-semibold text-ink-900 mb-3">
-            Emotional patterns
+          <p className="font-display font-semibold text-ink-900 dark:text-white mb-3">
+            {t("insights.emotionalPatterns")}
           </p>
 
           {patterns?.emotions?.length > 0 ? (
@@ -101,15 +103,15 @@ export default function Insights() {
               data={patterns.emotions}
             />
           ) : (
-            <p className="text-sm text-ink-400">
-              No emotion data available yet.
+            <p className="text-sm text-ink-400 dark:text-gray-400">
+              {t("insights.noEmotionData")}
             </p>
           )}
         </GlassCard>
 
         <GlassCard>
-          <p className="font-display font-semibold text-ink-900 mb-3">
-            Common triggers
+          <p className="font-display font-semibold text-ink-900 dark:text-white mb-3">
+            {t("insights.commonTriggers")}
           </p>
 
           {patterns?.triggers?.length > 0 ? (
@@ -117,8 +119,8 @@ export default function Insights() {
               data={patterns.triggers}
             />
           ) : (
-            <p className="text-sm text-ink-400">
-              No trigger data available yet.
+            <p className="text-sm text-ink-400 dark:text-gray-400">
+              {t("insights.noTriggerData")}
             </p>
           )}
         </GlassCard>
@@ -131,11 +133,11 @@ export default function Insights() {
           <div className="flex items-center gap-2 mb-3">
             <Tag
               size={18}
-              className="text-violet-600"
+              className="text-violet-600 dark:text-violet-400"
             />
 
-            <p className="font-display font-semibold text-ink-900">
-              Recurring themes
+            <p className="font-display font-semibold text-ink-900 dark:text-white">
+              {t("insights.recurringThemes")}
             </p>
           </div>
 
@@ -144,15 +146,15 @@ export default function Insights() {
               {patterns.themes.map((theme) => (
                 <span
                   key={theme}
-                  className="text-xs bg-violet-50 text-violet-700 px-3 py-1.5 rounded-full font-medium"
+                  className="text-xs bg-violet-50 dark:bg-violet-950/50 text-violet-700 dark:text-violet-300 px-3 py-1.5 rounded-full font-medium"
                 >
                   {theme}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-ink-400">
-              No recurring themes detected yet.
+            <p className="text-sm text-ink-400 dark:text-gray-400">
+              {t("insights.noThemesDetected")}
             </p>
           )}
         </GlassCard>
@@ -172,29 +174,24 @@ export default function Insights() {
                 />
               )}
 
-              <p className="font-display font-semibold text-ink-900">
-                Recent pattern
+              <p className="font-display font-semibold text-ink-900 dark:text-white">
+                {t("insights.recentPattern")}
               </p>
             </div>
 
             {status?.trends?.length >= 2 ? (
-              <p className="text-sm text-ink-500">
-                Based on your latest{" "}
-                {Math.min(
-                  status.trends.length,
-                  4
-                )}{" "}
-                check-ins, your current wellbeing
-                status is{" "}
-                <span className="font-medium">
+              <p className="text-sm text-ink-500 dark:text-gray-300">
+                {t("insights.basedOnLatest", {
+                  count: Math.min(status.trends.length, 4)
+                })}{" "}
+                <span className="font-medium text-ink-800 dark:text-gray-100">
                   {status.level || "stable"}
                 </span>
                 .
               </p>
             ) : (
-              <p className="text-sm text-ink-400">
-                More check-ins are needed to identify
-                a meaningful trend.
+              <p className="text-sm text-ink-400 dark:text-gray-400">
+                {t("insights.moreCheckinsNeeded")}
               </p>
             )}
           </div>
@@ -217,13 +214,12 @@ export default function Insights() {
             </div>
 
             <div>
-              <p className="font-display font-semibold text-ink-900">
-                {insight?.title || "AI insight"}
+              <p className="font-display font-semibold text-ink-900 dark:text-white">
+                {insight?.title || t("insights.aiInsight")}
               </p>
 
-              <p className="text-sm text-ink-500 mt-1 max-w-xl leading-relaxed">
-                {insight?.body ||
-                  "Complete a check-in or journal entry to receive an AI-generated insight."}
+              <p className="text-sm text-ink-500 dark:text-gray-300 mt-1 max-w-xl leading-relaxed">
+                {insight?.body || t("insights.defaultInsight")}
               </p>
             </div>
           </div>
@@ -233,17 +229,15 @@ export default function Insights() {
             to="/dashboard/wellness-plan"
             className="shrink-0"
           >
-            View your plan
+            {t("insights.viewYourPlan")}
             <ArrowRight size={16} />
           </Button>
 
         </div>
       </GlassCard>
 
-      <p className="text-xs text-ink-300 text-center">
-        These insights describe wellbeing-support signals
-        based on your check-ins and AI analysis, not a
-        medical diagnosis.
+      <p className="text-xs text-ink-300 dark:text-gray-500 text-center">
+        {t("insights.disclaimer")}
       </p>
     </div>
   );
