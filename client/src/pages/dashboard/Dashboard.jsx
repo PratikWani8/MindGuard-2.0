@@ -23,6 +23,7 @@ import RiskBadge from "../../components/cards/RiskBadge";
 import MultiTrendChart from "../../components/charts/MultiTrendChart";
 
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 import {
   fetchMoodTrend,
@@ -48,6 +49,7 @@ import {
 export default function Dashboard() {
 
   const { user } = useAuth();
+  const { t } = useTranslation();
 
 
   /*
@@ -532,21 +534,19 @@ export default function Dashboard() {
         {/* WELCOME */}
 
         <div>
-
           <p className="text-sm text-ink-400">
-            Welcome back,
+            {t("dashboard.welcome", "Welcome back")},
           </p>
 
           <h2 className="
             font-display
             text-2xl
             font-semibold
-            text-ink-900
+            text-ink-900 dark:text-white
           ">
             {user?.name?.split(" ")[0] ||
-              "there"} 👋
+              t("dashboard.there", "there")} 👋
           </h2>
-
         </div>
 
 
@@ -628,20 +628,16 @@ export default function Dashboard() {
                   }
                 `}
               >
-
                 {streak.streakBroken
-                  ? "Streak broken"
-                  : "Current streak"}
-
+                  ? t("dashboard.streakBroken", "Streak broken")
+                  : t("dashboard.currentStreak", "Current streak")}
               </p>
-
 
               <div className="
                 flex
                 items-baseline
                 gap-1
               ">
-
                 <span className="
                 streak-number
                 font-display
@@ -655,28 +651,23 @@ export default function Dashboard() {
                   streak-days
                   text-xs
                 ">
-                  {streak.currentStreak === 1 ? "day" : "days"}
+                  {streak.currentStreak === 1 ? t("common.day", "day") : t("common.days", "days")}
                 </span>
-
               </div>
 
-
               {/* Previous streak */}
-
               {streak.streakBroken &&
                 streak.previousStreak >
                   0 && (
-
                   <p className="
                     text-[10px]
                     text-ink-400
                     mt-0.5
                   ">
-                    Previous:{" "}
+                    {t("dashboard.previousStreak", "Previous:")}{" "}
                     {streak.previousStreak}{" "}
-                    days
+                    {t("common.days", "days")}
                   </p>
-
                 )}
 
             </div>
@@ -712,16 +703,15 @@ export default function Dashboard() {
 
         <StatCard
           icon={Target}
-          label="Wellbeing score"
+          label={t("dashboard.wellbeingScore", "Wellbeing score")}
           value={wellbeingScore}
           unit="/100"
           accent="violet"
         />
 
-
         <StatCard
           icon={Smile}
-          label="Mood today"
+          label={t("dashboard.moodToday", "Mood today")}
           value={
             mood !== null
               ? mood.toFixed(1)
@@ -731,10 +721,9 @@ export default function Dashboard() {
           accent="green"
         />
 
-
         <StatCard
           icon={Flame}
-          label="Stress today"
+          label={t("dashboard.stressToday", "Stress today")}
           value={
             stressLevel !== null
               ? stressLevel.toFixed(1)
@@ -744,10 +733,9 @@ export default function Dashboard() {
           accent="amber"
         />
 
-
         <StatCard
           icon={Moon}
-          label="Sleep last night"
+          label={t("dashboard.sleepLastNight", "Sleep last night")}
           value={
             sleepHours !== null
               ? sleepHours.toFixed(1)
@@ -805,7 +793,7 @@ export default function Dashboard() {
                 uppercase
                 tracking-wide
               ">
-                MindGuard AI Agent
+                {t("dashboard.aiAgentTitle", "MindGuard AI Agent")}
               </p>
 
 
@@ -813,10 +801,10 @@ export default function Dashboard() {
                 font-display
                 text-xl
                 font-semibold
-                text-ink-900
+                text-ink-900 dark:text-white
                 mt-1
               ">
-                Your wellbeing companion
+                {t("dashboard.aiAgentSubtitle", "Your wellbeing companion")}
               </h3>
 
 
@@ -825,7 +813,7 @@ export default function Dashboard() {
                 text-ink-400
                 mt-1
               ">
-                I analyze your recent patterns and suggest your next best step.
+                {t("dashboard.aiAgentDesc", "I analyze your recent patterns and suggest your next best step.")}
               </p>
 
             </div>
@@ -848,12 +836,16 @@ export default function Dashboard() {
             />
 
             {agentLoading
-              ? "Analyzing..."
-              : "Analyze my wellbeing"}
+              ? t("dashboard.analyzing", "Analyzing...")
+              : t("dashboard.analyzeWellbeing", "Analyze my wellbeing")}
 
           </Button>
 
         </div>
+
+        {agentError && (
+          <p className="text-xs text-red-500 dark:text-red-400 mt-2">{agentError}</p>
+        )}
 
         {!agent ? (
 
@@ -868,17 +860,17 @@ export default function Dashboard() {
 
             <p className="
               text-sm
-              text-ink-600
+              text-ink-600 dark:text-gray-300
             ">
-              Your AI agent hasn't analyzed your latest wellbeing data yet.
+              {t("dashboard.agentNotAnalyzed", "Your AI agent hasn't analyzed your latest wellbeing data yet.")}
             </p>
 
             <p className="
               text-xs
-              text-ink-400
+              text-ink-400 dark:text-gray-400
               mt-1
             ">
-              Complete a check-in, then let MindGuard analyze your recent patterns.
+              {t("dashboard.agentNotAnalyzedDesc", "Complete a check-in, then let MindGuard analyze your recent patterns.")}
             </p>
 
           </div>
@@ -897,23 +889,23 @@ export default function Dashboard() {
 
             <div className="
               rounded-2xl
-              bg-slate-50
+              bg-slate-50 dark:bg-white/5
               p-5
             ">
 
               <p className="
                 text-xs
                 font-medium
-                text-ink-400
+                text-ink-400 dark:text-gray-400
                 uppercase
                 tracking-wide
               ">
-                What I noticed
+                {t("dashboard.whatINoticed", "What I noticed")}
               </p>
 
               <p className="
                 text-sm
-                text-ink-700
+                text-ink-700 dark:text-gray-200
                 leading-6
                 mt-2
               ">
@@ -928,23 +920,23 @@ export default function Dashboard() {
 
             <div className="
               rounded-2xl
-              bg-slate-50
+              bg-slate-50 dark:bg-white/5
               p-5
             ">
 
               <p className="
                 text-xs
                 font-medium
-                text-ink-400
+                text-ink-400 dark:text-gray-400
                 uppercase
                 tracking-wide
               ">
-                AI reasoning
+                {t("dashboard.aiReasoning", "AI reasoning")}
               </p>
 
               <p className="
                 text-sm
-                text-ink-700
+                text-ink-700 dark:text-gray-200
                 leading-6
                 mt-2
               ">
@@ -959,18 +951,18 @@ export default function Dashboard() {
 
             <div className="
               rounded-2xl
-              bg-violet-50
+              bg-violet-50 dark:bg-violet-900/20
               p-5
             ">
 
               <p className="
                 text-xs
                 font-medium
-                text-violet-600
+                text-violet-600 dark:text-violet-400
                 uppercase
                 tracking-wide
               ">
-                Recommended action
+                {t("dashboard.recommendedAction", "Recommended action")}
               </p>
 
 
@@ -1047,17 +1039,16 @@ export default function Dashboard() {
                   <p className="
                     text-xs
                     font-medium
-                    text-aqua-600
+                    text-aqua-600 dark:text-aqua-400
                     uppercase
                     tracking-wide
                   ">
-                    AI follow-up
+                    {t("dashboard.aiFollowUp", "AI follow-up")}
                   </p>
-
 
                   <p className="
                     text-sm
-                    text-ink-700
+                    text-ink-700 dark:text-gray-200
                     mt-1
                   ">
                     {agent.followUpQuestion}
@@ -1107,9 +1098,9 @@ export default function Dashboard() {
               font-display
               text-xl
               font-semibold
-              text-ink-900
+              text-ink-900 dark:text-white
             ">
-              No check-ins yet
+              {t("dashboard.noCheckinYet", "No check-ins yet")}
             </h3>
 
 
@@ -1120,7 +1111,7 @@ export default function Dashboard() {
               max-w-md
               mx-auto
             ">
-              Complete your first check-in and your real mood, stress, sleep and wellbeing data will appear here.
+              {t("dashboard.noCheckinYetDesc", "Complete your first check-in and your real mood, stress, sleep and wellbeing data will appear here.")}
             </p>
 
 
@@ -1129,7 +1120,7 @@ export default function Dashboard() {
               to="/dashboard/checkin"
               className="mt-5"
             >
-              Start check-in
+              {t("dashboard.startCheckin", "Start check-in")}
               <ArrowRight size={16} />
             </Button>
 
@@ -1171,11 +1162,10 @@ export default function Dashboard() {
               <p className="
                 font-display
                 font-semibold
-                text-ink-900
+                text-ink-900 dark:text-white
               ">
-                7-day trend
+                {t("dashboard.sevenDayTrend", "7-day trend")}
               </p>
-
 
               <Link
                 to="/dashboard/trends"
@@ -1189,21 +1179,17 @@ export default function Dashboard() {
                   gap-1
                 "
               >
-                Full trends
+                {t("dashboard.fullTrends", "Full trends")}
                 <ArrowRight size={13} />
               </Link>
 
             </div>
 
-
             {trend.length > 0 ? (
-
               <MultiTrendChart
                 data={trend}
               />
-
             ) : (
-
               <div className="
                 h-64
                 flex
@@ -1212,80 +1198,64 @@ export default function Dashboard() {
                 text-sm
                 text-ink-400
               ">
-                Complete a check-in to see your trends.
+                {t("dashboard.completeCheckinToSeeTrends", "Complete a check-in to see your trends.")}
               </div>
-
             )}
 
           </GlassCard>
 
-
           {/* INSIGHT */}
-
           {insight ? (
-
             <InsightCard
               title={
                 insight.title ||
                 insight.heading ||
-                "Daily insight"
+                t("dashboard.dailyInsight", "Daily insight")
               }
               body={
                 insight.body ||
                 insight.summary ||
                 insight.text ||
-                "Your personalized insight will appear here."
+                t("dashboard.completeCheckinForInsights", "Your personalized insight will appear here.")
               }
             />
-
           ) : (
-
             <GlassCard>
-
               <p className="
                 font-display
                 font-semibold
-                text-ink-900
+                text-ink-900 dark:text-white
               ">
-                Daily insight
+                {t("dashboard.dailyInsight", "Daily insight")}
               </p>
-
 
               <p className="
                 text-sm
                 text-ink-400
                 mt-2
               ">
-                Complete a check-in to receive personalized insights.
+                {t("dashboard.completeCheckinForInsights", "Complete a check-in to receive personalized insights.")}
               </p>
-
             </GlassCard>
-
           )}
 
         </div>
 
-
         {/* ======================================
             RIGHT SIDEBAR
         ====================================== */}
-
         <div className="
           space-y-6
         ">
 
-
           {/* TODAY CHECK-IN */}
-
           <GlassCard strong>
-
             <div className="
               flex
               items-center
               gap-3
               mb-3
             ">
-
               <div className="
                 h-10
                 w-10
@@ -1299,30 +1269,26 @@ export default function Dashboard() {
                 <CalendarCheck size={19} />
               </div>
 
-
               <p className="
                 font-display
                 font-semibold
-                text-ink-900
+                text-ink-900 dark:text-white
               ">
                 {checkedInToday
-                  ? "You checked in today"
-                  : "Have you checked in today?"}
+                  ? t("dashboard.youCheckedInToday", "You checked in today")
+                  : t("dashboard.haveYouCheckedInToday", "Have you checked in today?")}
               </p>
-
             </div>
-
 
             <p className="
               text-sm
-              text-ink-500
+              text-ink-500 dark:text-gray-300
               mb-4
             ">
               {checkedInToday
-                ? "Great consistency — come back tomorrow to keep your trend accurate."
-                : "A quick check-in keeps your insights sharp and your plan personalized."}
+                ? t("dashboard.checkedInTodayDesc", "Great consistency — come back tomorrow to keep your trend accurate.")
+                : t("dashboard.notCheckedInTodayDesc", "A quick check-in keeps your insights sharp and your plan personalized.")}
             </p>
-
 
             <Button
               as={Link}
@@ -1331,24 +1297,20 @@ export default function Dashboard() {
               disabled={!!checkedInToday}
             >
               {checkedInToday
-                ? "Checked in ✓"
-                : "Start check-in"}
+                ? t("dashboard.checkedInCheck", "Checked in ✓")
+                : t("dashboard.startCheckin", "Start check-in")}
             </Button>
-
           </GlassCard>
 
-
           {/* RECOMMENDATIONS */}
-
           <GlassCard>
-
             <p className="
               font-display
               font-semibold
-              text-ink-900
+              text-ink-900 dark:text-white
               mb-3
             ">
-              Recommended for you
+              {t("dashboard.recommendedForYou", "Recommended for you")}
             </p>
 
 
@@ -1440,14 +1402,12 @@ export default function Dashboard() {
               size="sm"
               className="w-full mt-4"
             >
-              View wellness plan
+              {t("dashboard.exploreMoreWellness", "View wellness plan")}
             </Button>
 
           </GlassCard>
 
-
           {/* JOURNAL */}
-
           <GlassCard
             className="
               flex
@@ -1455,7 +1415,6 @@ export default function Dashboard() {
               gap-3
             "
           >
-
             <div className="
               h-10
               w-10
@@ -1470,28 +1429,24 @@ export default function Dashboard() {
               <BookOpen size={18} />
             </div>
 
-
             <div className="
               min-w-0
               flex-1
             ">
-
               <p className="
                 text-sm
                 font-medium
-                text-ink-800
+                text-ink-800 dark:text-gray-200
               ">
-                Write in your journal
+                {t("dashboard.actionJournalTitle", "Write in your journal")}
               </p>
-
 
               <p className="
                 text-xs
-                text-ink-400
+                text-ink-400 dark:text-gray-400
               ">
-                Unpack today in a few sentences.
+                {t("dashboard.actionJournalDesc", "Unpack today in a few sentences.")}
               </p>
-
             </div>
 
 
