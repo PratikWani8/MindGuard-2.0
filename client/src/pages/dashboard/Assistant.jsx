@@ -32,22 +32,28 @@ import {
 import {
   cn,
 } from "../../utils/cn";
-
+import { useTranslation } from "react-i18next";
 
 export default function Assistant() {
+  const { t, i18n } = useTranslation();
 
   const [messages, setMessages] =
     useState([
       {
         id: "welcome",
-
         role: "assistant",
-
-        text:
-          "Hi, I'm the MindGuard assistant. I can help you understand your patterns, think through wellbeing concerns, and explore practical coping strategies. I'm not a therapist or doctor, so for clinical concerns please reach out to a qualified professional.",
+        text: t("assistant.welcome"),
       },
     ]);
 
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].id === "welcome") {
+        return [{ ...prev[0], text: t("assistant.welcome") }];
+      }
+      return prev;
+    });
+  }, [t]);
 
   const [conversationId, setConversationId] =
     useState(null);
@@ -108,7 +114,12 @@ export default function Assistant() {
 
     recognition.interimResults = true;
 
-    recognition.lang = "en-IN";
+    recognition.lang =
+      i18n.language === "hi"
+        ? "hi-IN"
+        : i18n.language === "mr"
+        ? "mr-IN"
+        : "en-IN";
 
 
     recognition.onstart = () => {
@@ -191,7 +202,7 @@ export default function Assistant() {
 
     };
 
-  }, []);
+  }, [i18n.language]);
 
 
   /*
@@ -470,9 +481,10 @@ const send = async (text = input) => {
                 font-display
                 font-semibold
                 text-ink-900
+                dark:text-white
               "
             >
-              MindGuard Assistant
+              {t("assistant.title")}
             </p>
 
 
@@ -480,9 +492,10 @@ const send = async (text = input) => {
               className="
                 text-xs
                 text-ink-400
+                dark:text-gray-400
               "
             >
-              AI-powered wellbeing support
+              {t("assistant.subtitle")}
             </p>
 
           </div>
@@ -798,8 +811,8 @@ const send = async (text = input) => {
 
             placeholder={
               isListening
-                ? "Listening…"
-                : "Ask MindGuard something…"
+                ? t("assistant.listening")
+                : t("assistant.placeholder")
             }
 
             disabled={sending}
@@ -811,8 +824,12 @@ const send = async (text = input) => {
               rounded-xl
               border
               border-violet-100
+              dark:border-white/10
               bg-white/70
+              dark:bg-white/[0.04]
               text-sm
+              text-ink-800
+              dark:text-gray-100
               outline-none
               transition
               focus:border-violet-300
@@ -839,14 +856,14 @@ const send = async (text = input) => {
 
             aria-label={
               isListening
-                ? "Stop voice input"
-                : "Start voice input"
+                ? t("assistant.voiceStop")
+                : t("assistant.voiceStart")
             }
 
             title={
               isListening
-                ? "Stop listening"
-                : "Voice input"
+                ? t("assistant.voiceStop")
+                : t("assistant.voiceInput")
             }
 
             className={`
