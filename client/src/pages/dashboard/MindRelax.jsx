@@ -12,6 +12,7 @@ import {
   Moon,
   Brain,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import GlassCard from "../../components/common/GlassCard";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
@@ -53,26 +54,27 @@ function getIntentIcon(intent) {
   }
 }
 
-function getIntentLabel(intent) {
+function getIntentLabel(intent, t) {
   switch (intent) {
     case "sleep":
-      return "Sleep & Wind Down";
+      return t("mindRelax.intentSleep");
 
     case "focus":
-      return "Calm Focus";
+      return t("mindRelax.intentFocus");
 
     case "uplifting":
-      return "Gentle Energy";
+      return t("mindRelax.intentUplifting");
 
     case "deep-relaxation":
-      return "Deep Relaxation";
+      return t("mindRelax.intentDeepRelaxation");
 
     default:
-      return "Calm & Relax";
+      return t("mindRelax.intentCalm");
   }
 }
 
 export default function MindRelax() {
+  const { t } = useTranslation();
   const audioRef = useRef(null);
 
   const [recommendation, setRecommendation] = useState(null);
@@ -445,16 +447,15 @@ function selectTrack(track) {
         <div>
           <div className="flex items-center gap-2 text-violet-600 text-sm font-semibold mb-2">
             <Music2 size={18} />
-            Mind Relax
+            {t("mindRelax.tag")}
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-display font-semibold text-ink-900">
-            Music for your mind
+          <h1 className="text-3xl md:text-4xl font-display font-semibold text-ink-900 dark:text-white">
+            {t("mindRelax.headerTitle")}
           </h1>
 
-          <p className="text-ink-500 mt-2 max-w-2xl">
-            Let MindGuard choose a relaxing soundscape based
-            on your recent wellness signals.
+          <p className="text-ink-500 dark:text-gray-400 mt-2 max-w-2xl">
+            {t("mindRelax.headerSubtitle")}
           </p>
         </div>
 
@@ -462,7 +463,7 @@ function selectTrack(track) {
           type="button"
           onClick={() => loadRecommendation(true)}
           disabled={refreshing}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-violet-100 text-ink-700 hover:bg-violet-50 transition disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-violet-100 dark:border-gray-700 text-ink-700 dark:text-gray-200 hover:bg-violet-50 dark:hover:bg-gray-750 transition disabled:opacity-60"
         >
           <RefreshCw
             size={17}
@@ -470,8 +471,8 @@ function selectTrack(track) {
           />
 
           {refreshing
-            ? "Updating..."
-            : "Refresh AI Suggestion"}
+            ? t("mindRelax.updating")
+            : t("mindRelax.refreshAi")}
         </button>
       </div>
 
@@ -553,15 +554,16 @@ function selectTrack(track) {
             {/* Recommendation */}
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-50 text-violet-700 text-xs font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-50 dark:bg-violet-950/50 text-violet-700 dark:text-violet-300 text-xs font-semibold">
                   <Sparkles size={13} />
-                  AI Recommended
+                  {t("mindRelax.aiRecommended")}
                 </span>
 
                 {recommendation?.intent && (
-                  <span className="px-3 py-1 rounded-full bg-aqua-50 text-aqua-700 text-xs font-semibold">
+                  <span className="px-3 py-1 rounded-full bg-aqua-50 dark:bg-aqua-950/50 text-aqua-700 dark:text-aqua-300 text-xs font-semibold">
                     {getIntentLabel(
-                      recommendation.intent
+                      recommendation.intent,
+                      t
                     )}
                   </span>
                 )}
@@ -634,22 +636,22 @@ function selectTrack(track) {
               onClick={togglePlayback}
               disabled={!currentTrack}
               aria-label={
-                isPlaying ? "Pause music" : "Play music"
+                isPlaying ? t("mindRelax.pauseMusic") : t("mindRelax.playMusic")
               }
               className="h-12 w-12 shrink-0 rounded-full bg-gradient-to-br from-violet-500 to-aqua-500 text-white flex items-center justify-center shadow-soft hover:scale-105 transition-transform disabled:opacity-50"
             >
               {isPlaying ? (
-                <Pause
-                  size={21}
-                  fill="currentColor"
-                />
-              ) : (
-                <Play
-                  size={21}
-                  fill="currentColor"
-                  className="ml-0.5"
-                />
-              )}
+                 <Pause
+                   size={21}
+                   fill="currentColor"
+                 />
+               ) : (
+                 <Play
+                   size={21}
+                   fill="currentColor"
+                   className="ml-0.5"
+                 />
+               )}
             </button>
 
             <div className="flex-1 min-w-0">
@@ -704,8 +706,8 @@ function selectTrack(track) {
 "
               aria-label={
                 volume === 0
-                  ? "Unmute"
-                  : "Mute"
+                  ? t("mindRelax.unmute")
+                  : t("mindRelax.mute")
               }
             >
               {volume === 0 ? (
@@ -725,7 +727,7 @@ function selectTrack(track) {
                 setVolume(Number(event.target.value))
               }
               className="hidden sm:block w-20 accent-violet-500"
-              aria-label="Volume"
+              aria-label={t("mindRelax.volume")}
             />
           </div>
         </div>
@@ -754,11 +756,11 @@ function selectTrack(track) {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-ink-800">
-                MindGuard's suggestion
+              <p className="text-sm font-semibold text-ink-800 dark:text-gray-100">
+                {t("mindRelax.suggestionTitle")}
               </p>
 
-              <p className="text-sm text-ink-600 mt-1 leading-relaxed">
+              <p className="text-sm text-ink-600 dark:text-gray-300 mt-1 leading-relaxed">
                 {recommendation.aiMessage}
               </p>
             </div>
@@ -773,12 +775,12 @@ function selectTrack(track) {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-display font-semibold text-ink-900">
-              More relaxing music
+            <h2 className="text-xl font-display font-semibold text-ink-900 dark:text-white">
+              {t("mindRelax.moreMusic")}
             </h2>
 
-            <p className="text-sm text-ink-500 mt-1">
-              Choose another soundscape if you prefer.
+            <p className="text-sm text-ink-500 dark:text-gray-400 mt-1">
+              {t("mindRelax.moreMusicSubtitle")}
             </p>
           </div>
         </div>
@@ -883,18 +885,14 @@ function selectTrack(track) {
       {/* WELLNESS NOTE */}
       {/* ------------------------------------------------ */}
 
-      <div className="flex gap-3 rounded-2xl bg-slate-50 border border-slate-100 p-5">
+      <div className="flex gap-3 rounded-2xl bg-slate-50 dark:bg-gray-800/60 border border-slate-100 dark:border-gray-700/60 p-5">
         <Heart
           size={19}
           className="text-violet-500 shrink-0 mt-0.5"
         />
 
-        <p className="text-sm text-ink-500 leading-relaxed">
-          Music is offered as a simple wellness activity,
-          not as a treatment or diagnosis. If you are
-          experiencing significant distress, consider
-          reaching out to someone you trust or appropriate
-          professional support.
+        <p className="text-sm text-ink-500 dark:text-gray-300 leading-relaxed">
+          {t("mindRelax.wellnessNote")}
         </p>
       </div>
     </div>
