@@ -12,6 +12,7 @@ import GlassCard from "../../components/common/GlassCard";
 import Button from "../../components/common/Button";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { fetchSupportResources } from "../../services/supportApi";
+import { useTranslation } from "react-i18next";
 
 const categoryIcon = {
   "Mental health education": BookOpen,
@@ -21,6 +22,7 @@ const categoryIcon = {
 };
 
 export default function Support() {
+  const { t } = useTranslation();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -86,7 +88,7 @@ export default function Support() {
               dark:text-gray-100
             "
           >
-            In immediate danger or crisis?
+            {t("support.emergencyTitle")}
           </p>
 
           <p
@@ -98,19 +100,18 @@ export default function Support() {
               dark:text-gray-300
             "
           >
-            Contact local emergency services or a crisis helpline right away -
-            don't wait for a check-in.
+            {t("support.emergencyDesc")}
           </p>
         </div>
 
-        <Button variant="danger">Get emergency help</Button>
+        <Button variant="danger">{t("support.getEmergencyHelp")}</Button>
       </GlassCard>
 
       {/* ============================================================
           SUPPORT RESOURCES
           ============================================================ */}
       {loading ? (
-        <LoadingSpinner label="Loading resources" size="lg" />
+        <LoadingSpinner label={t("support.loadingResources")} size="lg" />
       ) : (
         <div className="grid gap-5 sm:grid-cols-2">
           {resources.map((cat) => {
@@ -257,16 +258,14 @@ export default function Support() {
             dark:text-gray-300
           "
         >
-          Want a real person to review your recent check-ins? You can request
-          a confidential human review at any time - someone from our support
-          team will reach out.
+          {t("support.humanReviewDesc")}
         </p>
 
         <Button
           variant="secondary"
           className="mt-4"
         >
-          Request human review
+          {t("support.requestHumanReview")}
         </Button>
       </GlassCard>
     </div>
